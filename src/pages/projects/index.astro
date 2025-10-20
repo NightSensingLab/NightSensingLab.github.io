@@ -1,0 +1,123 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
+const completedProjects = projects.filter(p => p.data.status === 'completed');
+---
+
+<BaseLayout title="Projects - NightSensingLab">
+  <div class="container-page py-12">
+    <div class="mb-8">
+      <h1 class="mb-4 text-3xl font-bold">Projects</h1>
+      <p class="text-neutral-400">实验室的研究项目和成果</p>
+    </div>
+
+    <!-- Ongoing Projects -->
+    <section class="mb-16">
+      <h2 class="mb-8 text-2xl font-bold">进行中的项目</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {ongoingProjects.map((project) => (
+          <article class="card p-6">
+            {project.data.cover && (
+              <div class="mb-4 aspect-video overflow-hidden rounded-lg">
+                <img src={project.data.cover} alt={project.data.title} 
+                     class="h-full w-full object-cover" />
+              </div>
+            )}
+            <div class="mb-2 flex items-center gap-2">
+              <span class="rounded-full bg-green-500/20 px-2 py-1 text-xs text-green-300">
+                进行中
+              </span>
+              <span class="text-sm text-neutral-400">
+                {project.data.startDate} - 至今
+              </span>
+            </div>
+            <h3 class="mb-3 text-lg font-semibold">{project.data.title}</h3>
+            <p class="mb-4 text-neutral-300">{project.data.description}</p>
+            <div class="mb-4 flex flex-wrap gap-2">
+              {project.data.tags.map((tag) => (
+                <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div class="mb-4 text-sm text-neutral-400">
+              <strong>成员:</strong> {project.data.members.join(', ')}
+            </div>
+            {project.data.links && (
+              <div class="flex gap-4">
+                {project.data.links.paper && (
+                  <a href={project.data.links.paper} 
+                     class="text-sm text-brand-400 hover:text-brand-300">相关论文</a>
+                )}
+                {project.data.links.code && (
+                  <a href={project.data.links.code} target="_blank" rel="noopener"
+                     class="text-sm text-brand-400 hover:text-brand-300">代码</a>
+                )}
+                {project.data.links.demo && (
+                  <a href={project.data.links.demo} target="_blank" rel="noopener"
+                     class="text-sm text-brand-400 hover:text-brand-300">演示</a>
+                )}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Completed Projects -->
+    <section>
+      <h2 class="mb-8 text-2xl font-bold">已完成的项目</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {completedProjects.map((project) => (
+          <article class="card p-6">
+            {project.data.cover && (
+              <div class="mb-4 aspect-video overflow-hidden rounded-lg">
+                <img src={project.data.cover} alt={project.data.title} 
+                     class="h-full w-full object-cover" />
+              </div>
+            )}
+            <div class="mb-2 flex items-center gap-2">
+              <span class="rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-300">
+                已完成
+              </span>
+              <span class="text-sm text-neutral-400">
+                {project.data.startDate} - {project.data.endDate}
+              </span>
+            </div>
+            <h3 class="mb-3 text-lg font-semibold">{project.data.title}</h3>
+            <p class="mb-4 text-neutral-300">{project.data.description}</p>
+            <div class="mb-4 flex flex-wrap gap-2">
+              {project.data.tags.map((tag) => (
+                <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div class="mb-4 text-sm text-neutral-400">
+              <strong>成员:</strong> {project.data.members.join(', ')}
+            </div>
+            {project.data.links && (
+              <div class="flex gap-4">
+                {project.data.links.paper && (
+                  <a href={project.data.links.paper} 
+                     class="text-sm text-brand-400 hover:text-brand-300">相关论文</a>
+                )}
+                {project.data.links.code && (
+                  <a href={project.data.links.code} target="_blank" rel="noopener"
+                     class="text-sm text-brand-400 hover:text-brand-300">代码</a>
+                )}
+                {project.data.links.demo && (
+                  <a href={project.data.links.demo} target="_blank" rel="noopener"
+                     class="text-sm text-brand-400 hover:text-brand-300">演示</a>
+                )}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

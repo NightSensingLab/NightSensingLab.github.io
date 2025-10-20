@@ -1,0 +1,23 @@
+---
+const links = [
+  { label: 'ORCID', href: '#' },
+  { label: 'Scholar', href: '#' },
+  { label: 'GitHub', href: 'https://github.com/NightSensingLab' },
+];
+---
+<footer class="mt-20 border-t border-neutral-200/50 bg-gradient-to-r from-neutral-100/50 to-neutral-200/50 backdrop-blur-sm dark:border-neutral-800/50 dark:bg-gradient-to-r dark:from-neutral-900/50 dark:to-neutral-800/50">
+  <div class="container-page py-12 text-sm text-neutral-600 dark:text-neutral-400">
+    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div>
+        <div class="font-bold text-xl gradient-text mb-2">NightSensingLab</div>
+        <div class="text-neutral-500 dark:text-neutral-500">© {new Date().getFullYear()} All rights reserved.</div>
+      </div>
+      <nav class="flex gap-6">
+        {links.map((l) => (
+          <a class="hover:text-brand-600 hover:scale-110 transition-all duration-300 font-medium dark:hover:text-brand-400" href={l.href} target="_blank" rel="noopener">{l.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+

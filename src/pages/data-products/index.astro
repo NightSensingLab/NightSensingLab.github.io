@@ -1,0 +1,188 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const dataProducts = await getCollection('data-products');
+const sortedProducts = dataProducts.sort((a, b) => 
+  new Date(b.data.lastUpdated).getTime() - new Date(a.data.lastUpdated).getTime()
+);
+
+// 获取所有标签和类型
+const allTags = [...new Set(dataProducts.flatMap(p => p.data.tags))];
+const allTypes = [...new Set(dataProducts.map(p => p.data.type))];
+
+const typeLabels = {
+  dataset: '数据集',
+  model: '模型',
+  tool: '工具',
+  indicator: '指标',
+};
+---
+
+<BaseLayout title="Data Products - NightSensingLab">
+  <div class="container-page py-12">
+    <div class="mb-8">
+      <h1 class="mb-4 text-3xl font-bold">Data Products</h1>
+      <p class="text-neutral-400">实验室发布的数据、模型和工具</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-8 flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">类型:</label>
+        <select id="type-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+          <option value="">全部</option>
+          {allTypes.map(type => (
+            <option value={type}>{typeLabels[type as keyof typeof typeLabels]}</option>
+          ))}
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">标签:</label>
+        <select id="tag-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+          <option value="">全部</option>
+          {allTags.map(tag => (
+            <option value={tag}>{tag}</option>
+          ))}
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">搜索:</label>
+        <input id="search-input" type="text" placeholder="搜索产品名称或描述..." 
+               class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm w-64" />
+      </div>
+    </div>
+
+    <!-- Products List -->
+    <div id="products-list" class="space-y-6">
+      {sortedProducts.map((product) => (
+        <article class="card p-6" data-type={product.data.type} data-tags={product.data.tags.join(',')}>
+          <div class="mb-4 flex items-start justify-between">
+            <div class="flex-1">
+              <div class="mb-2 flex items-center gap-3">
+                <span class="rounded-full bg-brand-500/20 px-3 py-1 text-sm text-brand-300">
+                  {typeLabels[product.data.type as keyof typeof typeLabels]}
+                </span>
+                {product.data.version && (
+                  <span class="text-sm text-neutral-400">v{product.data.version}</span>
+                )}
+                <span class="text-sm text-neutral-400">
+                  更新于 {new Date(product.data.lastUpdated).toLocaleDateString('zh-CN')}
+                </span>
+              </div>
+              <h3 class="mb-3 text-xl font-semibold">{product.data.title}</h3>
+              <p class="mb-4 text-neutral-300">{product.data.description}</p>
+              <div class="mb-4 flex flex-wrap gap-2">
+                {product.data.tags.map((tag) => (
+                  <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-4">
+            {product.data.downloadUrl && (
+              <a href={product.data.downloadUrl} target="_blank" rel="noopener"
+                 class="rounded bg-brand-600 px-4 py-2 text-sm hover:bg-brand-700">
+                下载
+              </a>
+            )}
+            {product.data.documentation && (
+              <a href={product.data.documentation} target="_blank" rel="noopener"
+                 class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800">
+                文档
+              </a>
+            )}
+            {product.data.citation && (
+              <button onclick={`showCitation('${product.data.citation?.replace(/'/g, "\\'")}')`}
+                      class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800">
+                引用格式
+              </button>
+            )}
+          </div>
+          
+          {product.data.license && (
+            <div class="mt-4 text-xs text-neutral-500">
+              许可证: {product.data.license}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <!-- Citation Modal -->
+  <div id="citation-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="max-w-2xl rounded-lg bg-neutral-900 p-6">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold">引用格式</h3>
+        <button onclick="closeCitation()" class="text-neutral-400 hover:text-white">×</button>
+      </div>
+      <pre id="citation-content" class="overflow-auto rounded bg-neutral-800 p-4 text-sm"></pre>
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="copyCitation()" class="rounded bg-brand-600 px-4 py-2 text-sm hover:bg-brand-700">复制</button>
+        <button onclick="closeCitation()" class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 过滤功能
+    const typeFilter = document.getElementById('type-filter');
+    const tagFilter = document.getElementById('tag-filter');
+    const searchInput = document.getElementById('search-input');
+    const productsList = document.getElementById('products-list');
+
+    function filterProducts() {
+      const type = typeFilter.value;
+      const tag = tagFilter.value;
+      const search = searchInput.value.toLowerCase();
+
+      const articles = productsList.querySelectorAll('article');
+      articles.forEach(article => {
+        const articleType = article.dataset.type;
+        const articleTags = article.dataset.tags.toLowerCase();
+        const title = article.querySelector('h3').textContent.toLowerCase();
+        const description = article.querySelector('p').textContent.toLowerCase();
+
+        const typeMatch = !type || articleType === type;
+        const tagMatch = !tag || articleTags.includes(tag.toLowerCase());
+        const searchMatch = !search || title.includes(search) || description.includes(search);
+
+        article.style.display = typeMatch && tagMatch && searchMatch ? 'block' : 'none';
+      });
+    }
+
+    typeFilter.addEventListener('change', filterProducts);
+    tagFilter.addEventListener('change', filterProducts);
+    searchInput.addEventListener('input', filterProducts);
+
+    // Citation 功能
+    function showCitation(citation) {
+      document.getElementById('citation-content').textContent = citation;
+      document.getElementById('citation-modal').classList.remove('hidden');
+      document.getElementById('citation-modal').classList.add('flex');
+    }
+
+    function closeCitation() {
+      document.getElementById('citation-modal').classList.add('hidden');
+      document.getElementById('citation-modal').classList.remove('flex');
+    }
+
+    function copyCitation() {
+      const content = document.getElementById('citation-content').textContent;
+      navigator.clipboard.writeText(content).then(() => {
+        alert('引用格式已复制到剪贴板');
+      });
+    }
+
+    // 点击模态框外部关闭
+    document.getElementById('citation-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeCitation();
+      }
+    });
+  </script>
+</BaseLayout>

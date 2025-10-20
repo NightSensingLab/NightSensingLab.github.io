@@ -1,0 +1,125 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About - NightSensingLab">
+  <div class="container-page py-12">
+    <div class="mx-auto max-w-4xl">
+      <h1 class="mb-8 text-4xl font-bold">About NightSensingLab</h1>
+      
+      <!-- Research Vision -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">研究愿景</h2>
+        <div class="prose-invert">
+          <p class="text-lg leading-relaxed">
+            NightSensingLab 致力于通过先进的传感技术和人工智能方法，为智慧城市建设提供科学依据和技术支撑。
+            我们专注于夜间城市环境监测，探索城市在夜晚时分的环境变化规律，为城市可持续发展贡献科研力量。
+          </p>
+        </div>
+      </section>
+
+      <!-- Research Directions -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">研究方向</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">环境监测技术</h3>
+            <p class="text-neutral-300">
+              开发高精度、低功耗的环境监测传感器，实现城市环境参数的实时、连续监测。
+            </p>
+          </div>
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">人工智能算法</h3>
+            <p class="text-neutral-300">
+              利用机器学习和深度学习技术，构建环境数据分析和预测模型。
+            </p>
+          </div>
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">智慧城市应用</h3>
+            <p class="text-neutral-300">
+              将研究成果应用于智慧城市建设，为城市管理和决策提供数据支撑。
+            </p>
+          </div>
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">数据开放共享</h3>
+            <p class="text-neutral-300">
+              建立开放的数据平台，促进环境数据的共享和科学研究的合作。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Keywords -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">关键词</h2>
+        <div class="flex flex-wrap gap-3">
+          {[
+            '夜间城市监测', '环境传感技术', '人工智能', '智慧城市', 
+            '空气质量监测', '传感器网络', '机器学习', '数据挖掘',
+            'IoT技术', '环境数据', '城市可持续发展', '开放数据'
+          ].map(keyword => (
+            <span class="rounded-full bg-brand-500/20 px-4 py-2 text-sm text-brand-300">
+              {keyword}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <!-- Collaboration -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">合作方式</h2>
+        <div class="prose-invert">
+          <p class="mb-4">
+            我们欢迎与国内外高校、科研院所、企业开展合作研究。合作形式包括：
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>联合科研项目</li>
+            <li>学生交流访问</li>
+            <li>技术转移转化</li>
+            <li>数据共享合作</li>
+            <li>学术会议交流</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Recruitment -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">招聘信息</h2>
+        <div class="card p-6">
+          <h3 class="mb-4 text-lg font-semibold">博士后研究员</h3>
+          <p class="mb-4 text-neutral-300">
+            招聘具有环境科学、计算机科学或相关背景的博士后研究员，参与实验室的前沿研究项目。
+          </p>
+          <div class="text-sm text-neutral-400">
+            <strong>要求：</strong>博士学位，相关研究经验，良好的英语水平<br>
+            <strong>待遇：</strong>具有竞争力的薪资和福利待遇<br>
+            <strong>申请：</strong>请发送简历和研究计划至实验室邮箱
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="mb-12">
+        <h2 class="mb-6 text-2xl font-bold">联系我们</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">实验室地址</h3>
+            <p class="text-neutral-300">
+              清华大学环境学院<br>
+              北京市海淀区清华园<br>
+              邮编：100084
+            </p>
+          </div>
+          <div class="card p-6">
+            <h3 class="mb-3 text-lg font-semibold">联系方式</h3>
+            <p class="text-neutral-300">
+              邮箱：contact@nightsensinglab.org<br>
+              电话：+86-10-6278-1234<br>
+              网站：https://nightsensinglab.github.io
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

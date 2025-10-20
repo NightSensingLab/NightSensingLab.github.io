@@ -1,0 +1,165 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const publications = await getCollection('publications');
+const sortedPublications = publications.sort((a, b) => b.data.year - a.data.year);
+
+// 获取所有标签和年份
+const allTags = [...new Set(publications.flatMap(p => p.data.tags))];
+const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) => b - a);
+---
+
+<BaseLayout title="Publications - NightSensingLab">
+  <div class="container-page py-12">
+    <div class="mb-8">
+      <h1 class="mb-4 text-3xl font-bold">Publications</h1>
+      <p class="text-neutral-400">实验室发表的研究论文和学术成果</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-8 flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">年份:</label>
+        <select id="year-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+          <option value="">全部</option>
+          {allYears.map(year => (
+            <option value={year}>{year}</option>
+          ))}
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">标签:</label>
+        <select id="tag-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+          <option value="">全部</option>
+          {allTags.map(tag => (
+            <option value={tag}>{tag}</option>
+          ))}
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">搜索:</label>
+        <input id="search-input" type="text" placeholder="搜索论文标题或作者..." 
+               class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm w-64" />
+      </div>
+    </div>
+
+    <!-- Publications List -->
+    <div id="publications-list" class="space-y-6">
+      {sortedPublications.map((pub) => (
+        <article class="card p-6" data-year={pub.data.year} data-tags={pub.data.tags.join(',')}>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-sm font-medium text-brand-400">{pub.data.venue} {pub.data.year}</span>
+            <div class="flex gap-2">
+              {pub.data.doi && (
+                <a href={`https://doi.org/${pub.data.doi}`} target="_blank" rel="noopener" 
+                   class="text-xs text-brand-400 hover:text-brand-300">DOI</a>
+              )}
+              {pub.data.pdf && (
+                <a href={pub.data.pdf} target="_blank" rel="noopener" 
+                   class="text-xs text-brand-400 hover:text-brand-300">PDF</a>
+              )}
+              {pub.data.code && (
+                <a href={pub.data.code} target="_blank" rel="noopener" 
+                   class="text-xs text-brand-400 hover:text-brand-300">Code</a>
+              )}
+              {pub.data.data && (
+                <a href={pub.data.data} target="_blank" rel="noopener" 
+                   class="text-xs text-brand-400 hover:text-brand-300">Data</a>
+              )}
+              {pub.data.bibtex && (
+                <button class="text-xs text-brand-400 hover:text-brand-300" 
+                        onclick={`showBibtex('${pub.data.bibtex.replace(/'/g, "\\'")}')`}>BibTeX</button>
+              )}
+            </div>
+          </div>
+          <h3 class="mb-3 text-lg font-semibold">{pub.data.title}</h3>
+          <p class="mb-3 text-neutral-300">{pub.data.authors.join(', ')}</p>
+          {pub.data.abstract && (
+            <p class="mb-4 text-sm text-neutral-400">{pub.data.abstract}</p>
+          )}
+          <div class="flex flex-wrap gap-2">
+            {pub.data.tags.map((tag) => (
+              <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <!-- BibTeX Modal -->
+  <div id="bibtex-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="max-w-2xl rounded-lg bg-neutral-900 p-6">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold">BibTeX</h3>
+        <button onclick="closeBibtex()" class="text-neutral-400 hover:text-white">×</button>
+      </div>
+      <pre id="bibtex-content" class="overflow-auto rounded bg-neutral-800 p-4 text-sm"></pre>
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="copyBibtex()" class="rounded bg-brand-600 px-4 py-2 text-sm hover:bg-brand-700">复制</button>
+        <button onclick="closeBibtex()" class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 过滤功能
+    const yearFilter = document.getElementById('year-filter');
+    const tagFilter = document.getElementById('tag-filter');
+    const searchInput = document.getElementById('search-input');
+    const publicationsList = document.getElementById('publications-list');
+
+    function filterPublications() {
+      const year = yearFilter.value;
+      const tag = tagFilter.value;
+      const search = searchInput.value.toLowerCase();
+
+      const articles = publicationsList.querySelectorAll('article');
+      articles.forEach(article => {
+        const articleYear = article.dataset.year;
+        const articleTags = article.dataset.tags.toLowerCase();
+        const title = article.querySelector('h3').textContent.toLowerCase();
+        const authors = article.querySelector('p').textContent.toLowerCase();
+
+        const yearMatch = !year || articleYear === year;
+        const tagMatch = !tag || articleTags.includes(tag.toLowerCase());
+        const searchMatch = !search || title.includes(search) || authors.includes(search);
+
+        article.style.display = yearMatch && tagMatch && searchMatch ? 'block' : 'none';
+      });
+    }
+
+    yearFilter.addEventListener('change', filterPublications);
+    tagFilter.addEventListener('change', filterPublications);
+    searchInput.addEventListener('input', filterPublications);
+
+    // BibTeX 功能
+    function showBibtex(bibtex) {
+      document.getElementById('bibtex-content').textContent = bibtex;
+      document.getElementById('bibtex-modal').classList.remove('hidden');
+      document.getElementById('bibtex-modal').classList.add('flex');
+    }
+
+    function closeBibtex() {
+      document.getElementById('bibtex-modal').classList.add('hidden');
+      document.getElementById('bibtex-modal').classList.remove('flex');
+    }
+
+    function copyBibtex() {
+      const content = document.getElementById('bibtex-content').textContent;
+      navigator.clipboard.writeText(content).then(() => {
+        alert('BibTeX 已复制到剪贴板');
+      });
+    }
+
+    // 点击模态框外部关闭
+    document.getElementById('bibtex-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeBibtex();
+      }
+    });
+  </script>
+</BaseLayout>

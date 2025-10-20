@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const news = await getCollection('news');
+const sortedNews = news.sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// 获取所有标签
+const allTags = [...new Set(news.flatMap(n => n.data.tags))];
+---
+
+<BaseLayout title="News - NightSensingLab">
+  <div class="container-page py-12">
+    <div class="mb-8">
+      <h1 class="mb-4 text-3xl font-bold">News</h1>
+      <p class="text-neutral-400">实验室最新动态和新闻</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-8 flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">标签:</label>
+        <select id="tag-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+          <option value="">全部</option>
+          {allTags.map(tag => (
+            <option value={tag}>{tag}</option>
+          ))}
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium">搜索:</label>
+        <input id="search-input" type="text" placeholder="搜索新闻标题或内容..." 
+               class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm w-64" />
+      </div>
+    </div>
+
+    <!-- News List -->
+    <div id="news-list" class="space-y-6">
+      {sortedNews.map((item) => (
+        <article class="card p-6" data-tags={item.data.tags.join(',')}>
+          <div class="mb-4 flex items-start justify-between">
+            <div class="flex-1">
+              <div class="mb-2 flex items-center gap-3">
+                <span class="text-sm text-neutral-400">{item.data.date}</span>
+                {item.data.featured && (
+                  <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-300">
+                    重要
+                  </span>
+                )}
+              </div>
+              <h3 class="mb-3 text-xl font-semibold">{item.data.title}</h3>
+              {item.data.excerpt && (
+                <p class="mb-4 text-neutral-300">{item.data.excerpt}</p>
+              )}
+              <div class="flex flex-wrap gap-2">
+                {item.data.tags.map((tag) => (
+                  <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    // 过滤功能
+    const tagFilter = document.getElementById('tag-filter');
+    const searchInput = document.getElementById('search-input');
+    const newsList = document.getElementById('news-list');
+
+    function filterNews() {
+      const tag = tagFilter.value;
+      const search = searchInput.value.toLowerCase();
+
+      const articles = newsList.querySelectorAll('article');
+      articles.forEach(article => {
+        const articleTags = article.dataset.tags.toLowerCase();
+        const title = article.querySelector('h3').textContent.toLowerCase();
+        const excerpt = article.querySelector('p')?.textContent.toLowerCase() || '';
+
+        const tagMatch = !tag || articleTags.includes(tag.toLowerCase());
+        const searchMatch = !search || title.includes(search) || excerpt.includes(search);
+
+        article.style.display = tagMatch && searchMatch ? 'block' : 'none';
+      });
+    }
+
+    tagFilter.addEventListener('change', filterNews);
+    searchInput.addEventListener('input', filterNews);
+  </script>
+</BaseLayout>
