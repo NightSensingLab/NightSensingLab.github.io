@@ -219,16 +219,16 @@ declare module 'astro:content' {
   collection: "people";
   data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
-"zhang-san.md": {
-	id: "zhang-san.md";
-  slug: "zhang-san";
+"zhao-liu.md": {
+	id: "zhao-liu.md";
+  slug: "zhao-liu";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
-"zhao-liu.md": {
-	id: "zhao-liu.md";
-  slug: "zhao-liu";
+"zhengzihao.md": {
+	id: "zhengzihao.md";
+  slug: "zhengzihao";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">
