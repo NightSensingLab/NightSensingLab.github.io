@@ -205,23 +205,37 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "people": {
-"li-si.md": {
-	id: "li-si.md";
-  slug: "li-si";
+"lijiayue.md": {
+	id: "lijiayue.md";
+  slug: "lijiayue";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
-"wang-wu.md": {
-	id: "wang-wu.md";
-  slug: "wang-wu";
+"lingzhenxiang.md": {
+	id: "lingzhenxiang.md";
+  slug: "lingzhenxiang";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
-"zhao-liu.md": {
-	id: "zhao-liu.md";
-  slug: "zhao-liu";
+"liuguangyuan.md": {
+	id: "liuguangyuan.md";
+  slug: "liuguangyuan";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
+"pengkeying.md": {
+	id: "pengkeying.md";
+  slug: "pengkeying";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
+"wangchun.md": {
+	id: "wangchun.md";
+  slug: "wangchun";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">

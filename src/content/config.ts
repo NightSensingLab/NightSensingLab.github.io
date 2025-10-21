@@ -41,7 +41,7 @@ const people = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
-    role: z.enum(['PI', 'Postdoc', 'PhD', 'Master', 'Alumni']),
+    role: z.enum(['PI', 'Postdoc', 'PhD', 'Master', 'Graduate', 'Alumni']),
     affiliation: z.string(),
     avatar: z.string().optional(),
     bio: z.string().optional(),
