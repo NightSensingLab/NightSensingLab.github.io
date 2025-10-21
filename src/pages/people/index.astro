@@ -4,14 +4,14 @@ import { getCollection } from 'astro:content';
 
 const people = await getCollection('people');
 
-// 按角色分组
+// 按角色分组，并在每个角色内按displayOrder排序
 const groupedPeople = {
-  PI: people.filter(p => p.data.role === 'PI'),
-  Postdoc: people.filter(p => p.data.role === 'Postdoc'),
-  PhD: people.filter(p => p.data.role === 'PhD'),
-  Master: people.filter(p => p.data.role === 'Master'),
-  Graduate: people.filter(p => p.data.role === 'Graduate'),
-  Alumni: people.filter(p => p.data.role === 'Alumni'),
+  PI: people.filter(p => p.data.role === 'PI').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  Postdoc: people.filter(p => p.data.role === 'Postdoc').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  PhD: people.filter(p => p.data.role === 'PhD').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  Master: people.filter(p => p.data.role === 'Master').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  Graduate: people.filter(p => p.data.role === 'Graduate').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  Alumni: people.filter(p => p.data.role === 'Alumni').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
 };
 
 const roleLabels = {
@@ -39,57 +39,47 @@ const roleLabels = {
           <h2 class="mb-8 text-2xl font-bold">{roleLabels[role as keyof typeof roleLabels]}</h2>
           <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {members.map((person) => (
-              <article class="card p-6 text-center">
-                {person.data.avatar ? (
-                  <div class="mb-4">
-                    <img src={person.data.avatar} alt={person.data.name} 
-                         class="mx-auto h-24 w-24 rounded-full object-cover" />
-                  </div>
-                ) : (
-                  <div class="mb-4 mx-auto h-24 w-24 rounded-full bg-neutral-800 flex items-center justify-center">
-                    <span class="text-2xl font-semibold text-neutral-400">
-                      {person.data.name.charAt(0)}
-                    </span>
-                  </div>
-                )}
-                <h3 class="mb-2 text-lg font-semibold">{person.data.name}</h3>
-                <p class="mb-2 text-sm text-brand-400">{person.data.role}</p>
-                <p class="mb-4 text-sm text-neutral-400">{person.data.affiliation}</p>
-                {person.data.bio && (
-                  <p class="mb-4 text-sm text-neutral-300">{person.data.bio}</p>
-                )}
-                {person.data.researchInterests.length > 0 && (
-                  <div class="mb-4">
-                    <h4 class="mb-2 text-sm font-medium text-neutral-200">研究兴趣</h4>
-                    <div class="flex flex-wrap justify-center gap-1">
-                      {person.data.researchInterests.map((interest) => (
-                        <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
-                          {interest}
-                        </span>
-                      ))}
+              <article class="card p-6 text-center hover:scale-105 transition-transform cursor-pointer group">
+                <a href={`/people/${person.slug}`} class="block">
+                  {person.data.avatar ? (
+                    <div class="mb-4">
+                      <img src={person.data.avatar} alt={person.data.name} 
+                           class="mx-auto h-24 w-24 rounded-full object-cover" />
                     </div>
+                  ) : (
+                    <div class="mb-4 mx-auto h-24 w-24 rounded-full bg-neutral-800 flex items-center justify-center">
+                      <span class="text-2xl font-semibold text-neutral-400">
+                        {person.data.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                  <h3 class="mb-2 text-lg font-semibold group-hover:text-brand-300 transition-colors">{person.data.name}</h3>
+                  <p class="mb-2 text-sm text-brand-400">{person.data.role}</p>
+                  <p class="mb-4 text-sm text-neutral-600 dark:text-neutral-400">{person.data.affiliation}</p>
+                  {person.data.bio && (
+                    <p class="mb-4 text-sm text-neutral-600 dark:text-neutral-300 line-clamp-3">{person.data.bio}</p>
+                  )}
+                  {person.data.researchInterests.length > 0 && (
+                    <div class="mb-4">
+                      <h4 class="mb-2 text-sm font-medium text-neutral-700 dark:text-neutral-200">研究兴趣</h4>
+                      <div class="flex flex-wrap justify-center gap-1">
+                        {person.data.researchInterests.slice(0, 3).map((interest) => (
+                          <span class="rounded-full bg-neutral-200 dark:bg-neutral-800 px-2 py-1 text-xs text-neutral-700 dark:text-neutral-300">
+                            {interest}
+                          </span>
+                        ))}
+                        {person.data.researchInterests.length > 3 && (
+                          <span class="rounded-full bg-neutral-200 dark:bg-neutral-800 px-2 py-1 text-xs text-neutral-500 dark:text-neutral-400">
+                            +{person.data.researchInterests.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  <div class="text-sm text-brand-400 group-hover:text-brand-300 transition-colors">
+                    查看详情 →
                   </div>
-                )}
-                {person.data.links && (
-                  <div class="flex justify-center gap-4">
-                    {person.data.links.orcid && (
-                      <a href={`https://orcid.org/${person.data.links.orcid}`} target="_blank" rel="noopener"
-                         class="text-sm text-brand-400 hover:text-brand-300">ORCID</a>
-                    )}
-                    {person.data.links.scholar && (
-                      <a href={person.data.links.scholar} target="_blank" rel="noopener"
-                         class="text-sm text-brand-400 hover:text-brand-300">Scholar</a>
-                    )}
-                    {person.data.links.github && (
-                      <a href={person.data.links.github} target="_blank" rel="noopener"
-                         class="text-sm text-brand-400 hover:text-brand-300">GitHub</a>
-                    )}
-                    {person.data.links.website && (
-                      <a href={person.data.links.website} target="_blank" rel="noopener"
-                         class="text-sm text-brand-400 hover:text-brand-300">Website</a>
-                    )}
-                  </div>
-                )}
+                </a>
               </article>
             ))}
           </div>

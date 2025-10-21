@@ -1,0 +1,303 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const people = await getCollection('people');
+  return people.map((person) => ({
+    params: { slug: person.slug },
+    props: { person },
+  }));
+}
+
+const { person } = Astro.props;
+
+// 格式化论文引用，突出显示作者姓名和期刊
+function formatPublication(pub: string, authorName: string | string[]) {
+  let formatted = pub.trim();
+
+  // ---- 1) 加粗作者名（可传单个或多个） ----
+  const names = Array.isArray(authorName) ? authorName : [authorName];
+
+  // 使用“前后为非字母/边界”的方式匹配作者名，并将紧随其后的 * 一并加粗
+  // 如果你需要更广泛的 Unicode 字母匹配，可将 [A-Za-z] 替换为 \p{L} 并在正则上加 'u'
+  for (const name of names) {
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const authorRe = new RegExp(`(^|[^A-Za-z])(${escaped})(\\*?)(?=[^A-Za-z]|$)`, 'g');
+    formatted = formatted.replace(authorRe, (_m, pre, nm, star) => {
+      return `${pre}<strong>${nm}${star || ''}</strong>`;
+    });
+  }
+
+  // ---- 2) 提取期刊名：倒数第二个 '.' 之后到“随即的第一个 ','”之间 ----
+  // 去掉尾随空白，保留末尾句号（如果有），仅用于定位索引
+  const s = formatted;
+
+  // 找到最后一个 '.' 的位置
+  const lastDot = s.lastIndexOf('.');
+  if (lastDot === -1) return formatted; // 找不到句号就不处理期刊样式
+
+  // 找到“倒数第二个 '.'”
+  const secondLastDot = s.lastIndexOf('.', lastDot - 1);
+  if (secondLastDot === -1) return formatted; // 不足两个句号，不处理
+
+  // 期刊片段起点（跳过空格）
+  let start = secondLastDot + 1;
+  while (start < s.length && /\s/.test(s[start])) start++;
+
+  // 从起点开始找第一个逗号
+  const commaAfterStart = s.indexOf(',', start);
+  if (commaAfterStart === -1) return formatted; // 起点后无逗号，不处理
+
+  const journalRaw = s.slice(start, commaAfterStart).trim();
+  if (!journalRaw) return formatted;
+
+  // 仅替换该区间，避免误把标题中同名词条替换
+  const before = s.slice(0, start);
+  const after = s.slice(commaAfterStart); // 从逗号开始保留
+  const journalStyled = `<span class="text-blue-600 dark:text-blue-400 font-bold italic">${journalRaw}</span>`;
+
+  formatted = `${before}${journalStyled}${after}`;
+  
+  return formatted;
+}
+
+
+---
+
+<BaseLayout title={`${person.data.name} - NightSensingLab`}>
+  <div class="container-page py-12">
+    <!-- 返回按钮 -->
+    <div class="mb-8">
+      <a href="/people" class="inline-flex items-center text-brand-400 hover:text-brand-300">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        返回人员列表
+      </a>
+    </div>
+
+    <!-- 个人信息头部 -->
+    <div class="mb-12">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+        <!-- 头像 -->
+        <div class="flex-shrink-0">
+          {person.data.avatar ? (
+            <img src={person.data.avatar} alt={person.data.name} 
+                 class="w-32 h-32 rounded-full object-cover" />
+          ) : (
+            <div class="w-32 h-32 rounded-full bg-neutral-800 flex items-center justify-center">
+              <span class="text-4xl font-semibold text-neutral-400">
+                {person.data.name.charAt(0)}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="flex-1">
+          <h1 class="text-4xl font-bold mb-4">{person.data.name}</h1>
+          <p class="text-xl text-brand-400 mb-2">{person.data.role}</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-300 mb-4">{person.data.affiliation}</p>
+          
+          {person.data.bio && (
+            <p class="text-neutral-700 dark:text-neutral-200 leading-relaxed">{person.data.bio}</p>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <!-- 联系信息 -->
+    {(person.data.email || person.data.phone || person.data.office) && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">联系信息</h2>
+        <div class="grid gap-4 md:grid-cols-3">
+          {person.data.email && (
+            <div class="card p-4">
+              <h3 class="font-semibold text-brand-400 mb-2">邮箱</h3>
+              <a href={`mailto:${person.data.email}`} class="text-neutral-700 dark:text-neutral-200 hover:text-brand-600 dark:hover:text-brand-300">
+                {person.data.email}
+              </a>
+            </div>
+          )}
+          {person.data.phone && (
+            <div class="card p-4">
+              <h3 class="font-semibold text-brand-400 mb-2">电话</h3>
+              <a href={`tel:${person.data.phone}`} class="text-neutral-700 dark:text-neutral-200 hover:text-brand-600 dark:hover:text-brand-300">
+                {person.data.phone}
+              </a>
+            </div>
+          )}
+          {person.data.office && (
+            <div class="card p-4">
+              <h3 class="font-semibold text-brand-400 mb-2">办公室</h3>
+              <p class="text-neutral-700 dark:text-neutral-200">{person.data.office}</p>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- 研究兴趣 -->
+    {person.data.researchInterests.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">研究兴趣</h2>
+        <div class="flex flex-wrap gap-2">
+          {person.data.researchInterests.map((interest) => (
+            <span class="rounded-full bg-brand-100 dark:bg-brand-900/30 px-4 py-2 text-sm text-brand-700 dark:text-brand-300 border border-brand-300 dark:border-brand-700/50">
+              {interest}
+            </span>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- 教育背景 -->
+    {person.data.education.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">教育背景</h2>
+        <div class="space-y-4">
+          {person.data.education.map((edu) => (
+            <div class="card p-4">
+              <p class="text-neutral-700 dark:text-neutral-200">{edu}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+    
+    <!-- 代表性论文 -->
+    {person.data.publications.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">代表性论文</h2>
+        <div class="space-y-3">
+          {person.data.publications.map((pub, index) => (
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium flex items-center justify-center mt-0.5">
+                {index + 1}
+              </span>
+              <p class="text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed" set:html={formatPublication(pub, ["Zheng, Z.", "郑子豪"])}></p>
+              
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+    
+    <!-- 研究项目 -->
+    {person.data.projects.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">研究项目</h2>
+        <div class="space-y-4">
+          {person.data.projects.map((project) => (
+            <div class="card p-4">
+              <p class="text-neutral-700 dark:text-neutral-200">{project}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- 社会服务 -->
+    {person.data.socialServices.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">社会服务</h2>
+        <div class="space-y-4">
+          {person.data.socialServices.map((service) => (
+            <div class="card p-4">
+              <p class="text-neutral-700 dark:text-neutral-200">{service}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- 获奖情况 -->
+    {person.data.awards.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">获奖情况</h2>
+        <div class="space-y-4">
+          {person.data.awards.map((award) => (
+            <div class="card p-4">
+              <p class="text-neutral-700 dark:text-neutral-200">{award}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+
+
+    <!-- 外部链接 -->
+    {person.data.links && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">相关链接</h2>
+        <div class="flex flex-wrap gap-4">
+          {person.data.links.orcid && (
+            <a href={`https://orcid.org/${person.data.links.orcid}`} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.568 18.431c-3.706 0-6.715-3.009-6.715-6.715s3.009-6.715 6.715-6.715 6.715 3.009 6.715 6.715-3.009 6.715-6.715 6.715z"/>
+              </svg>
+              ORCID
+            </a>
+          )}
+          {person.data.links.scholar && (
+            <a href={person.data.links.scholar} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5s-5.548 1.749-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+              </svg>
+              Google Scholar
+            </a>
+          )}
+          {person.data.links.github && (
+            <a href={person.data.links.github} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+          )}
+          {person.data.links.website && (
+            <a href={person.data.links.website} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              个人网站
+            </a>
+          )}
+          {person.data.links.researchgate && (
+            <a href={person.data.links.researchgate} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.169 0-.304.135-.304.304v7.072c0 .169.135.304.304.304s.304-.135.304-.304V8.464c0-.169-.135-.304-.304-.304zM12 6.5c-3.033 0-5.5 2.467-5.5 5.5s2.467 5.5 5.5 5.5 5.5-2.467 5.5-5.5-2.467-5.5-5.5-5.5z"/>
+              </svg>
+              ResearchGate
+            </a>
+          )}
+          {person.data.links.weibo && (
+            <a href={person.data.links.weibo} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9.8 8.9h-3.5c-.1 0-.2.1-.2.2v1.4c0 .1.1.2.2.2h3.5c.1 0 .2-.1.2-.2V9.1c0-.1-.1-.2-.2-.2zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.2 13.5h-1.4c-.1 0-.2-.1-.2-.2V9.1c0-.1.1-.2.2-.2h1.4c.1 0 .2.1.2.2v6.2c0 .1-.1.2-.2.2zm4.7-6.2c0 .1-.1.2-.2.2h-1.4c-.1 0-.2-.1-.2-.2V9.1c0-.1.1-.2.2-.2h1.4c.1 0 .2.1.2.2v.2zm0 1.5c0 .1-.1.2-.2.2h-1.4c-.1 0-.2-.1-.2-.2v-1.4c0-.1.1-.2.2-.2h1.4c.1 0 .2.1.2.2v1.4z"/>
+              </svg>
+              微博
+            </a>
+          )}
+          {person.data.links.zhihu && (
+            <a href={person.data.links.zhihu} target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm text-neutral-200 hover:text-brand-300 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.169 0-.304.135-.304.304v7.072c0 .169.135.304.304.304s.304-.135.304-.304V8.464c0-.169-.135-.304-.304-.304zM12 6.5c-3.033 0-5.5 2.467-5.5 5.5s2.467 5.5 5.5 5.5 5.5-2.467 5.5-5.5-2.467-5.5-5.5-5.5z"/>
+              </svg>
+              知乎
+            </a>
+          )}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
