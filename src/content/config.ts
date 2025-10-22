@@ -14,7 +14,7 @@ const publications = defineCollection({
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     abstract: z.string().optional(),
-    bibtex: z.string().optional(),
+    citation: z.string().optional(),
   }),
 });
 
@@ -29,6 +29,9 @@ const projects = defineCollection({
     members: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     cover: z.string().optional(),
+    amount: z.string().optional(),
+    type: z.string().optional(),
+    source: z.string().optional(),
     links: z.object({
       paper: z.string().optional(),
       code: z.string().optional(),

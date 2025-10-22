@@ -67,9 +67,9 @@ const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) =>
                 <a href={pub.data.data} target="_blank" rel="noopener" 
                    class="text-xs text-brand-400 hover:text-brand-300">Data</a>
               )}
-              {pub.data.bibtex && (
+              {pub.data.citation && (
                 <button class="text-xs text-brand-400 hover:text-brand-300" 
-                        onclick={`showBibtex('${pub.data.bibtex.replace(/'/g, "\\'")}')`}>BibTeX</button>
+                        data-citation={pub.data.citation}>Cite</button>
               )}
             </div>
           </div>
@@ -90,17 +90,17 @@ const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) =>
     </div>
   </div>
 
-  <!-- BibTeX Modal -->
-  <div id="bibtex-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
-    <div class="max-w-2xl rounded-lg bg-neutral-900 p-6">
+  <!-- Citation Modal -->
+  <div id="citation-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="max-w-2xl rounded-lg bg-neutral-900 dark:bg-neutral-900 bg-white dark:bg-neutral-900 p-6 shadow-xl">
       <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-lg font-semibold">BibTeX</h3>
-        <button onclick="closeBibtex()" class="text-neutral-400 hover:text-white">×</button>
+        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">APA Citation</h3>
+        <button id="close-citation-btn" class="text-neutral-400 hover:text-neutral-600 dark:hover:text-white text-2xl font-bold">×</button>
       </div>
-      <pre id="bibtex-content" class="overflow-auto rounded bg-neutral-800 p-4 text-sm"></pre>
+      <pre id="citation-content" class="overflow-auto rounded bg-neutral-100 dark:bg-neutral-800 p-4 text-sm text-neutral-900 dark:text-neutral-200 whitespace-pre-wrap"></pre>
       <div class="mt-4 flex justify-end gap-2">
-        <button onclick="copyBibtex()" class="rounded bg-brand-600 px-4 py-2 text-sm hover:bg-brand-700">复制</button>
-        <button onclick="closeBibtex()" class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800">关闭</button>
+        <button id="copy-citation-btn" class="rounded bg-brand-600 px-4 py-2 text-sm text-white hover:bg-brand-700 transition-colors">复制</button>
+        <button id="close-citation-btn2" class="rounded border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">关闭</button>
       </div>
     </div>
   </div>
@@ -136,29 +136,61 @@ const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) =>
     tagFilter.addEventListener('change', filterPublications);
     searchInput.addEventListener('input', filterPublications);
 
-    // BibTeX 功能
-    function showBibtex(bibtex) {
-      document.getElementById('bibtex-content').textContent = bibtex;
-      document.getElementById('bibtex-modal').classList.remove('hidden');
-      document.getElementById('bibtex-modal').classList.add('flex');
+    // Citation 功能
+    function showCitation(citation) {
+      document.getElementById('citation-content').textContent = citation;
+      document.getElementById('citation-modal').classList.remove('hidden');
+      document.getElementById('citation-modal').classList.add('flex');
     }
 
-    function closeBibtex() {
-      document.getElementById('bibtex-modal').classList.add('hidden');
-      document.getElementById('bibtex-modal').classList.remove('flex');
+    function closeCitation() {
+      document.getElementById('citation-modal').classList.add('hidden');
+      document.getElementById('citation-modal').classList.remove('flex');
     }
 
-    function copyBibtex() {
-      const content = document.getElementById('bibtex-content').textContent;
+    function copyCitation() {
+      const content = document.getElementById('citation-content').textContent;
       navigator.clipboard.writeText(content).then(() => {
-        alert('BibTeX 已复制到剪贴板');
+        // 更新按钮文本提供反馈
+        const copyBtn = document.getElementById('copy-citation-btn');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '已复制!';
+        copyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        copyBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+        
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+          copyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+          copyBtn.classList.add('bg-brand-600', 'hover:bg-brand-700');
+        }, 2000);
+      }).catch(err => {
+        console.error('复制失败:', err);
+        alert('复制失败，请手动选择文本复制');
       });
     }
 
+    // 为所有Cite按钮添加点击事件
+    document.addEventListener('DOMContentLoaded', function() {
+      const citationButtons = document.querySelectorAll('button[data-citation]');
+      citationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const citation = this.getAttribute('data-citation');
+          showCitation(citation);
+        });
+      });
+
+      // 绑定关闭按钮事件
+      document.getElementById('close-citation-btn').addEventListener('click', closeCitation);
+      document.getElementById('close-citation-btn2').addEventListener('click', closeCitation);
+      
+      // 绑定复制按钮事件
+      document.getElementById('copy-citation-btn').addEventListener('click', copyCitation);
+    });
+
     // 点击模态框外部关闭
-    document.getElementById('bibtex-modal').addEventListener('click', (e) => {
+    document.getElementById('citation-modal').addEventListener('click', (e) => {
       if (e.target === e.currentTarget) {
-        closeBibtex();
+        closeCitation();
       }
     });
   </script>

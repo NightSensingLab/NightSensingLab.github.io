@@ -168,37 +168,30 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "news": {
-"2024-08-05-data-release.md": {
-	id: "2024-08-05-data-release.md";
-  slug: "2024-08-05-data-release";
+"2025-03-03-grant-awarded.md": {
+	id: "2025-03-03-grant-awarded.md";
+  slug: "2025-03-03-grant-awarded";
   body: string;
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
-"2024-09-10-new-member.md": {
-	id: "2024-09-10-new-member.md";
-  slug: "2024-09-10-new-member";
+"2025-08-15-conference-presentation.md": {
+	id: "2025-08-15-conference-presentation.md";
+  slug: "2025-08-15-conference-presentation";
   body: string;
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
-"2024-10-20-grant-awarded.md": {
-	id: "2024-10-20-grant-awarded.md";
-  slug: "2024-10-20-grant-awarded";
+"2025-09-01-new-member.md": {
+	id: "2025-09-01-new-member.md";
+  slug: "2025-09-01-new-member";
   body: string;
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
-"2024-11-15-conference-presentation.md": {
-	id: "2024-11-15-conference-presentation.md";
-  slug: "2024-11-15-conference-presentation";
-  body: string;
-  collection: "news";
-  data: InferEntrySchema<"news">
-} & { render(): Render[".md"] };
-"2024-12-01-new-paper-published.md": {
-	id: "2024-12-01-new-paper-published.md";
-  slug: "2024-12-01-new-paper-published";
+"2025-09-27-IG-paper-published.md": {
+	id: "2025-09-27-IG-paper-published.md";
+  slug: "2025-09-27-ig-paper-published";
   body: string;
   collection: "news";
   data: InferEntrySchema<"news">
@@ -256,67 +249,39 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "projects": {
-"ai-pollution-prediction.md": {
-	id: "ai-pollution-prediction.md";
-  slug: "ai-pollution-prediction";
+"2024-GZkeji-ZhengZH.md": {
+	id: "2024-GZkeji-ZhengZH.md";
+  slug: "2024-gzkeji-zhengzh";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
-"air-quality-iot.md": {
-	id: "air-quality-iot.md";
-  slug: "air-quality-iot";
-  body: string;
-  collection: "projects";
-  data: InferEntrySchema<"projects">
-} & { render(): Render[".md"] };
-"smart-city-monitoring.md": {
-	id: "smart-city-monitoring.md";
-  slug: "smart-city-monitoring";
+"2025-NSFC-ZhengZH.md": {
+	id: "2025-NSFC-ZhengZH.md";
+  slug: "2025-nsfc-zhengzh";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 };
 "publications": {
-"2019-wireless-sensors.md": {
-	id: "2019-wireless-sensors.md";
-  slug: "2019-wireless-sensors";
+"2021-zhengzh-GEC.md": {
+	id: "2021-zhengzh-GEC.md";
+  slug: "2021-zhengzh-gec";
   body: string;
   collection: "publications";
   data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
-"2020-machine-learning-pollution.md": {
-	id: "2020-machine-learning-pollution.md";
-  slug: "2020-machine-learning-pollution";
+"2025-lingzx-IG.md": {
+	id: "2025-lingzx-IG.md";
+  slug: "2025-lingzx-ig";
   body: string;
   collection: "publications";
   data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
-"2021-iot-air-quality.md": {
-	id: "2021-iot-air-quality.md";
-  slug: "2021-iot-air-quality";
-  body: string;
-  collection: "publications";
-  data: InferEntrySchema<"publications">
-} & { render(): Render[".md"] };
-"2022-sensor-fusion.md": {
-	id: "2022-sensor-fusion.md";
-  slug: "2022-sensor-fusion";
-  body: string;
-  collection: "publications";
-  data: InferEntrySchema<"publications">
-} & { render(): Render[".md"] };
-"2023-ai-environmental-monitoring.md": {
-	id: "2023-ai-environmental-monitoring.md";
-  slug: "2023-ai-environmental-monitoring";
-  body: string;
-  collection: "publications";
-  data: InferEntrySchema<"publications">
-} & { render(): Render[".md"] };
-"2024-night-sensing-urban.md": {
-	id: "2024-night-sensing-urban.md";
-  slug: "2024-night-sensing-urban";
+"2025-zhengzh-RSE.md": {
+	id: "2025-zhengzh-RSE.md";
+  slug: "2025-zhengzh-rse";
   body: string;
   collection: "publications";
   data: InferEntrySchema<"publications">

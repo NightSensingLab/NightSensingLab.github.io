@@ -7,7 +7,7 @@ bio: "郑子豪副教授，博士毕业于意大利帕多瓦大学，专注于�
 researchInterests: ["夜光遥感", "光污染评估", "城市生态", "GEE制图"]
 displayOrder: 1
 education: 
-  - "博士，意大利帕多瓦大学，LERH"
+  - "博士，Università degli Studi di Padova，LERH"
   - "硕士，广州大学地理学与遥感学院，地图学与地理信息系统"
   - "学士，广州大学地理科学学院，地理信息系统"
 email: "zhengzihao@gzhu.edu.cn"

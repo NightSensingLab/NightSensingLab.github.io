@@ -43,8 +43,17 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
                 </span>
               ))}
             </div>
-            <div class="mb-4 text-sm text-neutral-400">
-              <strong>成员:</strong> {project.data.members.join(', ')}
+            <div class="mb-4 space-y-2 text-sm text-neutral-400">
+              <div><strong>成员:</strong> {project.data.members.join(', ')}</div>
+              {project.data.amount && (
+                <div><strong>金额:</strong> {project.data.amount}</div>
+              )}
+              {project.data.type && (
+                <div><strong>类型:</strong> {project.data.type}</div>
+              )}
+              {project.data.source && (
+                <div><strong>来源:</strong> {project.data.source}</div>
+              )}
             </div>
             {project.data.links && (
               <div class="flex gap-4">
@@ -96,8 +105,17 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
                 </span>
               ))}
             </div>
-            <div class="mb-4 text-sm text-neutral-400">
-              <strong>成员:</strong> {project.data.members.join(', ')}
+            <div class="mb-4 space-y-2 text-sm text-neutral-400">
+              <div><strong>成员:</strong> {project.data.members.join(', ')}</div>
+              {project.data.amount && (
+                <div><strong>金额:</strong> {project.data.amount}</div>
+              )}
+              {project.data.type && (
+                <div><strong>类型:</strong> {project.data.type}</div>
+              )}
+              {project.data.source && (
+                <div><strong>来源:</strong> {project.data.source}</div>
+              )}
             </div>
             {project.data.links && (
               <div class="flex gap-4">

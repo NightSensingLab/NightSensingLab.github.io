@@ -170,9 +170,9 @@ function formatPublication(pub: string, authorName: string | string[]) {
     {person.data.publications.length > 0 && (
       <section class="mb-12">
         <h2 class="text-2xl font-bold mb-6">代表性论文</h2>
-        <div class="space-y-3">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {person.data.publications.map((pub, index) => (
-            <div class="flex items-start gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+            <div class="card p-4 flex items-start gap-3">
               <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium flex items-center justify-center mt-0.5">
                 {index + 1}
               </span>
@@ -188,10 +188,13 @@ function formatPublication(pub: string, authorName: string | string[]) {
     {person.data.projects.length > 0 && (
       <section class="mb-12">
         <h2 class="text-2xl font-bold mb-6">研究项目</h2>
-        <div class="space-y-4">
-          {person.data.projects.map((project) => (
-            <div class="card p-4">
-              <p class="text-neutral-700 dark:text-neutral-200">{project}</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {person.data.projects.map((project, index) => (
+            <div class="card p-4 flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium flex items-center justify-center mt-0.5">
+                {index + 1}
+              </span>
+              <p class="text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed">{project}</p>
             </div>
           ))}
         </div>
@@ -202,10 +205,13 @@ function formatPublication(pub: string, authorName: string | string[]) {
     {person.data.socialServices.length > 0 && (
       <section class="mb-12">
         <h2 class="text-2xl font-bold mb-6">社会服务</h2>
-        <div class="space-y-4">
-          {person.data.socialServices.map((service) => (
-            <div class="card p-4">
-              <p class="text-neutral-700 dark:text-neutral-200">{service}</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {person.data.socialServices.map((service, index) => (
+            <div class="card p-4 flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium flex items-center justify-center mt-0.5">
+                {index + 1}
+              </span>
+              <p class="text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed">{service}</p>
             </div>
           ))}
         </div>
@@ -216,10 +222,13 @@ function formatPublication(pub: string, authorName: string | string[]) {
     {person.data.awards.length > 0 && (
       <section class="mb-12">
         <h2 class="text-2xl font-bold mb-6">获奖情况</h2>
-        <div class="space-y-4">
-          {person.data.awards.map((award) => (
-            <div class="card p-4">
-              <p class="text-neutral-700 dark:text-neutral-200">{award}</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {person.data.awards.map((award, index) => (
+            <div class="card p-4 flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium flex items-center justify-center mt-0.5">
+                {index + 1}
+              </span>
+              <p class="text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed">{award}</p>
             </div>
           ))}
         </div>
