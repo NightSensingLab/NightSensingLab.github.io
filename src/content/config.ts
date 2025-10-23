@@ -94,6 +94,7 @@ const news = defineCollection({
     excerpt: z.string().optional(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    pictures: z.array(z.string()).optional(),
   }),
 });
 

@@ -122,7 +122,7 @@ const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
             <p class="mb-6 text-neutral-700 dark:text-neutral-300 leading-relaxed">{project.data.description}</p>
             <div class="mb-6 flex flex-wrap gap-2">
               {project.data.tags.map((tag) => (
-                <span class="rounded-full bg-gradient-to-r from-green-500/20 to-brand-500/20 px-3 py-1 text-xs text-green-300 border border-green-500/30">
+                <span class="rounded-full bg-gradient-to-r from-blue-500/20 to-brand-500/20 px-3 py-1 text-xs text-blue-600 dark:text-blue-300 border border-blue-500/30">
                   {tag}
                 </span>
               ))}

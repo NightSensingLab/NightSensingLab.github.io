@@ -15,14 +15,14 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
   <div class="container-page py-12">
     <div class="mb-8">
       <h1 class="mb-4 text-3xl font-bold">News</h1>
-      <p class="text-neutral-400">实验室最新动态和新闻</p>
+      <p class="text-neutral-500 dark:text-neutral-400">实验室最新动态和新闻</p>
     </div>
 
     <!-- Filters -->
     <div class="mb-8 flex flex-wrap gap-4">
       <div class="flex items-center gap-2">
         <label class="text-sm font-medium">标签:</label>
-        <select id="tag-filter" class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm">
+        <select id="tag-filter" class="rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-3 py-1 text-sm text-neutral-900 dark:text-neutral-100">
           <option value="">全部</option>
           {allTags.map(tag => (
             <option value={tag}>{tag}</option>
@@ -32,34 +32,88 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
       <div class="flex items-center gap-2">
         <label class="text-sm font-medium">搜索:</label>
         <input id="search-input" type="text" placeholder="搜索新闻标题或内容..." 
-               class="rounded border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm w-64" />
+               class="rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-3 py-1 text-sm w-64 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400" />
       </div>
     </div>
 
     <!-- News List -->
-    <div id="news-list" class="space-y-6">
-      {sortedNews.map((item) => (
-        <article class="card p-6" data-tags={item.data.tags.join(',')}>
-          <div class="mb-4 flex items-start justify-between">
+    <div id="news-list" class="space-y-8">
+      {sortedNews.map((item, index) => (
+        <article class="card p-6" data-tags={item.data.tags.join(',')} data-index={index}>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Left Column: Text Content -->
             <div class="flex-1">
               <div class="mb-2 flex items-center gap-3">
-                <span class="text-sm text-neutral-400">{item.data.date}</span>
+                <span class="text-sm text-neutral-500 dark:text-neutral-400">{item.data.date}</span>
                 {item.data.featured && (
-                  <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-300">
+                  <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-600 dark:text-brand-300">
                     重要
                   </span>
                 )}
               </div>
               <h3 class="mb-3 text-xl font-semibold">{item.data.title}</h3>
               {item.data.excerpt && (
-                <p class="mb-4 text-neutral-300">{item.data.excerpt}</p>
+                <p class="mb-4 text-neutral-600 dark:text-neutral-300 leading-relaxed">{item.data.excerpt}</p>
               )}
               <div class="flex flex-wrap gap-2">
                 {item.data.tags.map((tag) => (
-                  <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                  <span class="rounded-full bg-neutral-200 dark:bg-neutral-800 px-2 py-1 text-xs text-neutral-600 dark:text-neutral-300">
                     {tag}
                   </span>
                 ))}
+              </div>
+            </div>
+            
+            <!-- Right Column: Image Carousel -->
+            <div class="flex justify-center lg:justify-end">
+              <div class="w-full max-w-sm">
+                <div class="relative">
+                  <!-- Carousel Container -->
+                  <div class="carousel-container relative overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
+                    <div class="carousel-wrapper flex transition-transform duration-500 ease-in-out" id={`carousel-news-${index}`}>
+                      <!-- Images from news md file -->
+                      {item.data.pictures && item.data.pictures.length > 0 ? (
+                        item.data.pictures.map((picture, picIndex) => (
+                          <div class="carousel-slide w-full flex-shrink-0">
+                            <img src={picture} alt={`${item.data.title} - Image ${picIndex + 1}`} class="w-full h-48 object-cover" />
+                          </div>
+                        ))
+                      ) : (
+                        <!-- Fallback images if no pictures are specified -->
+                        <div class="carousel-slide w-full flex-shrink-0">
+                          <img src="/images/placeholder.svg" alt="News Image" class="w-full h-48 object-cover" />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-300" 
+                            onclick={`prevSlide('news-${index}')`}>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                      </svg>
+                    </button>
+                    <button class="carousel-next absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-300"
+                            onclick={`nextSlide('news-${index}')`}>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <!-- Dots Indicator -->
+                  <div class="flex justify-center mt-3 space-x-2">
+                    {item.data.pictures && item.data.pictures.length > 0 ? (
+                      item.data.pictures.map((_, picIndex) => (
+                        <button class="carousel-dot w-2 h-2 rounded-full bg-neutral-400 hover:bg-neutral-600 transition-colors duration-300" 
+                                onclick={`goToSlide('news-${index}', ${picIndex})`}></button>
+                      ))
+                    ) : (
+                      <button class="carousel-dot w-2 h-2 rounded-full bg-neutral-400 hover:bg-neutral-600 transition-colors duration-300" 
+                              onclick={`goToSlide('news-${index}', 0)`}></button>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -90,6 +144,79 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
         article.style.display = tagMatch && searchMatch ? 'block' : 'none';
       });
     }
+
+    // 轮播功能
+    const carouselStates = {};
+
+    function initCarousel(slug) {
+      if (!carouselStates[slug]) {
+        const carousel = document.getElementById(`carousel-${slug}`);
+        const slides = carousel ? carousel.querySelectorAll('.carousel-slide') : [];
+        carouselStates[slug] = {
+          currentSlide: 0,
+          totalSlides: slides.length || 1
+        };
+        updateCarousel(slug);
+      }
+    }
+
+    function updateCarousel(slug) {
+      const state = carouselStates[slug];
+      const carousel = document.getElementById(`carousel-${slug}`);
+      const dots = document.querySelectorAll(`[onclick*="goToSlide('${slug}'"]`);
+      
+      if (carousel) {
+        carousel.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      }
+      
+      // 更新dots状态
+      dots.forEach((dot, index) => {
+        if (index === state.currentSlide) {
+          dot.classList.add('bg-brand-500');
+          dot.classList.remove('bg-neutral-400');
+        } else {
+          dot.classList.remove('bg-brand-500');
+          dot.classList.add('bg-neutral-400');
+        }
+      });
+    }
+
+    function nextSlide(slug) {
+      initCarousel(slug);
+      const state = carouselStates[slug];
+      state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
+      updateCarousel(slug);
+    }
+
+    function prevSlide(slug) {
+      initCarousel(slug);
+      const state = carouselStates[slug];
+      state.currentSlide = state.currentSlide === 0 ? state.totalSlides - 1 : state.currentSlide - 1;
+      updateCarousel(slug);
+    }
+
+    function goToSlide(slug, slideIndex) {
+      initCarousel(slug);
+      carouselStates[slug].currentSlide = slideIndex;
+      updateCarousel(slug);
+    }
+
+    // 自动轮播
+    function startAutoCarousel(slug) {
+      initCarousel(slug);
+      setInterval(() => {
+        nextSlide(slug);
+      }, 5000); // 每5秒自动切换
+    }
+
+    // 初始化所有轮播
+    document.addEventListener('DOMContentLoaded', () => {
+      const articles = document.querySelectorAll('article');
+      articles.forEach((article, index) => {
+        const slug = `news-${index}`; // 使用索引作为唯一标识
+        startAutoCarousel(slug);
+      });
+    });
 
     tagFilter.addEventListener('change', filterNews);
     searchInput.addEventListener('input', filterNews);

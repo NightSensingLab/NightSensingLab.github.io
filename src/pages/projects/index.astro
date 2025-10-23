@@ -11,7 +11,7 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
   <div class="container-page py-12">
     <div class="mb-8">
       <h1 class="mb-4 text-3xl font-bold">Projects</h1>
-      <p class="text-neutral-400">实验室的研究项目和成果</p>
+      <p class="text-neutral-500 dark:text-neutral-500 dark:text-neutral-400">实验室的研究项目和成果</p>
     </div>
 
     <!-- Ongoing Projects -->
@@ -27,23 +27,23 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
               </div>
             )}
             <div class="mb-2 flex items-center gap-2">
-              <span class="rounded-full bg-green-500/20 px-2 py-1 text-xs text-green-300">
+              <span class="rounded-full bg-green-500/20 px-2 py-1 text-xs text-green-600 dark:text-green-300">
                 进行中
               </span>
-              <span class="text-sm text-neutral-400">
+              <span class="text-sm text-neutral-500 dark:text-neutral-500 dark:text-neutral-400">
                 {project.data.startDate} - 至今
               </span>
             </div>
             <h3 class="mb-3 text-lg font-semibold">{project.data.title}</h3>
-            <p class="mb-4 text-neutral-300">{project.data.description}</p>
+            <p class="mb-4 text-neutral-600 dark:text-neutral-300">{project.data.description}</p>
             <div class="mb-4 flex flex-wrap gap-2">
               {project.data.tags.map((tag) => (
-                <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-300">
+                <span class="rounded-full bg-brand-500/20 px-2 py-1 text-xs text-brand-600 dark:text-brand-300">
                   {tag}
                 </span>
               ))}
             </div>
-            <div class="mb-4 space-y-2 text-sm text-neutral-400">
+            <div class="mb-4 space-y-2 text-sm text-neutral-500 dark:text-neutral-400">
               <div><strong>成员:</strong> {project.data.members.join(', ')}</div>
               {project.data.amount && (
                 <div><strong>金额:</strong> {project.data.amount}</div>
@@ -59,15 +59,15 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
               <div class="flex gap-4">
                 {project.data.links.paper && (
                   <a href={project.data.links.paper} 
-                     class="text-sm text-brand-400 hover:text-brand-300">相关论文</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">相关论文</a>
                 )}
                 {project.data.links.code && (
                   <a href={project.data.links.code} target="_blank" rel="noopener"
-                     class="text-sm text-brand-400 hover:text-brand-300">代码</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">代码</a>
                 )}
                 {project.data.links.demo && (
                   <a href={project.data.links.demo} target="_blank" rel="noopener"
-                     class="text-sm text-brand-400 hover:text-brand-300">演示</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">演示</a>
                 )}
               </div>
             )}
@@ -89,23 +89,23 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
               </div>
             )}
             <div class="mb-2 flex items-center gap-2">
-              <span class="rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-300">
+              <span class="rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-600 dark:text-blue-300">
                 已完成
               </span>
-              <span class="text-sm text-neutral-400">
+              <span class="text-sm text-neutral-500 dark:text-neutral-400">
                 {project.data.startDate} - {project.data.endDate}
               </span>
             </div>
             <h3 class="mb-3 text-lg font-semibold">{project.data.title}</h3>
-            <p class="mb-4 text-neutral-300">{project.data.description}</p>
+            <p class="mb-4 text-neutral-600 dark:text-neutral-300">{project.data.description}</p>
             <div class="mb-4 flex flex-wrap gap-2">
               {project.data.tags.map((tag) => (
-                <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-300">
+                <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs text-neutral-600 dark:text-neutral-300">
                   {tag}
                 </span>
               ))}
             </div>
-            <div class="mb-4 space-y-2 text-sm text-neutral-400">
+            <div class="mb-4 space-y-2 text-sm text-neutral-500 dark:text-neutral-400">
               <div><strong>成员:</strong> {project.data.members.join(', ')}</div>
               {project.data.amount && (
                 <div><strong>金额:</strong> {project.data.amount}</div>
@@ -121,15 +121,15 @@ const completedProjects = projects.filter(p => p.data.status === 'completed');
               <div class="flex gap-4">
                 {project.data.links.paper && (
                   <a href={project.data.links.paper} 
-                     class="text-sm text-brand-400 hover:text-brand-300">相关论文</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">相关论文</a>
                 )}
                 {project.data.links.code && (
                   <a href={project.data.links.code} target="_blank" rel="noopener"
-                     class="text-sm text-brand-400 hover:text-brand-300">代码</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">代码</a>
                 )}
                 {project.data.links.demo && (
                   <a href={project.data.links.demo} target="_blank" rel="noopener"
-                     class="text-sm text-brand-400 hover:text-brand-300">演示</a>
+                     class="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300">演示</a>
                 )}
               </div>
             )}
