@@ -196,6 +196,13 @@ declare module 'astro:content' {
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
+"2025-10-24-attend-conference.md": {
+	id: "2025-10-24-attend-conference.md";
+  slug: "2025-10-24-attend-conference";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
 };
 "people": {
 "lijiayue.md": {
