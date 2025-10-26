@@ -47,33 +47,33 @@ const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) =>
     <!-- Publications List -->
     <div id="publications-list" class="space-y-6">
       {sortedPublications.map((pub) => (
-        <article class="card p-6" data-year={pub.data.year} data-tags={pub.data.tags.join(',')}>
+        <article class="card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-year={pub.data.year} data-tags={pub.data.tags.join(',')} onclick={`window.location.href='/publications/${pub.slug}'`}>
           <div class="mb-2 flex items-center justify-between">
             <span class="text-sm font-medium text-brand-400">{pub.data.venue} {pub.data.year}</span>
             <div class="flex gap-2">
               {pub.data.doi && (
                 <a href={`https://doi.org/${pub.data.doi}`} target="_blank" rel="noopener" 
-                   class="text-xs text-brand-400 hover:text-brand-300">DOI</a>
+                   class="text-xs text-brand-400 hover:text-brand-300" onclick="event.stopPropagation()">DOI</a>
               )}
               {pub.data.pdf && (
                 <a href={pub.data.pdf} target="_blank" rel="noopener" 
-                   class="text-xs text-brand-400 hover:text-brand-300">PDF</a>
+                   class="text-xs text-brand-400 hover:text-brand-300" onclick="event.stopPropagation()">PDF</a>
               )}
               {pub.data.code && (
                 <a href={pub.data.code} target="_blank" rel="noopener" 
-                   class="text-xs text-brand-400 hover:text-brand-300">Code</a>
+                   class="text-xs text-brand-400 hover:text-brand-300" onclick="event.stopPropagation()">Code</a>
               )}
               {pub.data.data && (
                 <a href={pub.data.data} target="_blank" rel="noopener" 
-                   class="text-xs text-brand-400 hover:text-brand-300">Data</a>
+                   class="text-xs text-brand-400 hover:text-brand-300" onclick="event.stopPropagation()">Data</a>
               )}
               {pub.data.citation && (
                 <button class="text-xs text-brand-400 hover:text-brand-300" 
-                        data-citation={pub.data.citation}>Cite</button>
+                        data-citation={pub.data.citation} onclick="event.stopPropagation()">Cite</button>
               )}
             </div>
           </div>
-          <h3 class="mb-3 text-lg font-semibold">{pub.data.title}</h3>
+          <h3 class="mb-3 text-lg font-semibold hover:text-brand-300 transition-colors">{pub.data.title}</h3>
           <p class="mb-3 text-neutral-300">{pub.data.authors.join(', ')}</p>
           {pub.data.abstract && (
             <p class="mb-4 text-sm text-neutral-400">{pub.data.abstract}</p>
@@ -84,6 +84,9 @@ const allYears = [...new Set(publications.map(p => p.data.year))].sort((a, b) =>
                 {tag}
               </span>
             ))}
+          </div>
+          <div class="mt-4 text-sm text-brand-400 hover:text-brand-300">
+            点击查看详情 →
           </div>
         </article>
       ))}

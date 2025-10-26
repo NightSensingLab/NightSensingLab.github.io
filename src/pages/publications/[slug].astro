@@ -1,0 +1,308 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const publications = await getCollection('publications');
+  return publications.map((publication) => ({
+    params: { slug: publication.slug },
+    props: { publication },
+  }));
+}
+
+const { publication } = Astro.props;
+const { Content } = await publication.render();
+
+// 格式化作者列表，突出显示实验室成员
+function formatAuthors(authors: string[]) {
+  const labMembers = ['Zihao Zheng', 'Zheng, Z.', '郑子豪', 'Ling Zhenxiang', 'Liu Guangyuan', 'Peng Keying', 'Tan Xiujuan'];
+  
+  return authors.map(author => {
+    const isLabMember = labMembers.some(member => 
+      author.includes(member) || member.includes(author)
+    );
+    
+    if (isLabMember) {
+      return `<strong class="text-brand-400">${author}</strong>`;
+    }
+    return author;
+  }).join(', ');
+}
+
+// 格式化期刊名称
+function formatVenue(venue: string) {
+  return `<span class="text-blue-600 dark:text-blue-400 font-bold italic">${venue}</span>`;
+}
+---
+
+<BaseLayout title={`${publication.data.title} - NightSensingLab`}>
+  <div class="container-page py-12">
+    <!-- 返回按钮 -->
+    <div class="mb-8">
+      <a href="/publications" class="inline-flex items-center text-brand-400 hover:text-brand-300">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        返回论文列表
+      </a>
+    </div>
+
+    <!-- 论文基本信息 -->
+    <div class="mb-12">
+      <div class="card p-8">
+        <!-- 标题 -->
+        <h1 class="text-3xl font-bold mb-6 leading-tight">{publication.data.title}</h1>
+        
+        <!-- 作者信息 -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-brand-400 mb-3">作者</h2>
+          <p class="text-lg text-neutral-700 dark:text-neutral-200" set:html={formatAuthors(publication.data.authors)}></p>
+        </div>
+
+        <!-- 发表信息 -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-brand-400 mb-3">发表信息</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <span class="font-medium">期刊/会议：</span>
+              <span set:html={formatVenue(publication.data.venue)}></span>
+            </div>
+            <div>
+              <span class="font-medium">年份：</span>
+              <span class="text-neutral-700 dark:text-neutral-200">{publication.data.year}</span>
+            </div>
+            {publication.data.doi && (
+              <div>
+                <span class="font-medium">DOI：</span>
+                <a href={`https://doi.org/${publication.data.doi}`} target="_blank" rel="noopener"
+                   class="text-brand-400 hover:text-brand-300">10.1016/j.rse.2025.114598</a>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- 标签 -->
+        {publication.data.tags && publication.data.tags.length > 0 && (
+          <div class="mb-6">
+            <h2 class="text-lg font-semibold text-brand-400 mb-3">关键词</h2>
+            <div class="flex flex-wrap gap-2">
+              {publication.data.tags.map((tag) => (
+                <span class="rounded-full bg-brand-100 dark:bg-brand-900/30 px-3 py-1 text-sm text-brand-700 dark:text-brand-300 border border-brand-300 dark:border-brand-700/50">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- 外部链接 -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-brand-400 mb-3">相关链接</h2>
+          <div class="flex flex-wrap gap-4">
+            {publication.data.pdf && (
+              <a href={publication.data.pdf} target="_blank" rel="noopener"
+                 class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm text-white transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+                PDF
+              </a>
+            )}
+            {publication.data.doi && (
+              <a href={`https://doi.org/${publication.data.doi}`} target="_blank" rel="noopener"
+                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm text-white transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,16.5L18,9.5L16.5,8L11,13.5L7.5,10L6,11.5L11,16.5Z"/>
+                </svg>
+                DOI
+              </a>
+            )}
+            {publication.data.code && (
+              <a href={publication.data.code} target="_blank" rel="noopener"
+                 class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-sm text-white transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                Code
+              </a>
+            )}
+            {publication.data.data && (
+              <a href={publication.data.data} target="_blank" rel="noopener"
+                 class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm text-white transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,16.5L18,9.5L16.5,8L11,13.5L7.5,10L6,11.5L11,16.5Z"/>
+                </svg>
+                Data
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- 论文详细内容 -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-brand-400 mb-3">论文详情</h2>
+          <div class="bg-neutral-100 dark:bg-neutral-800 p-6 rounded-lg">
+            <div class="space-y-6">
+              <Content />
+            </div>
+          </div>
+        </div>
+
+        <!-- 引用信息 -->
+        {publication.data.citation && (
+          <div class="mb-6">
+            <h2 class="text-lg font-semibold text-brand-400 mb-3">引用格式</h2>
+            <div class="bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg">
+              <pre class="text-sm text-neutral-700 dark:text-neutral-200 whitespace-pre-wrap font-mono">{publication.data.citation}</pre>
+              <button id="copy-citation-btn" class="mt-3 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm rounded transition-colors">
+                复制引用
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+
+  </div>
+
+  <style is:global>
+    .space-y-6 h2 {
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #1f2937 !important;
+      margin-top: 2rem !important;
+      margin-bottom: 1rem !important;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 1px solid #d1d5db !important;
+    }
+    
+    .dark .space-y-6 h2 {
+      color: #f9fafb !important;
+      border-bottom-color: #4b5563 !important;
+    }
+    
+    .space-y-6 h3 {
+      font-size: 1.125rem !important;
+      font-weight: 600 !important;
+      color: #374151 !important;
+      margin-top: 1.5rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+    
+    .dark .space-y-6 h3 {
+      color: #e5e7eb !important;
+    }
+    
+    .space-y-6 p {
+      color: #374151 !important;
+      line-height: 1.75 !important;
+      margin-bottom: 1rem !important;
+    }
+    
+    .dark .space-y-6 p {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 strong {
+      color: #1f2937 !important;
+      font-weight: 600 !important;
+    }
+    
+    .dark .space-y-6 strong {
+      color: #f9fafb !important;
+    }
+    
+    .space-y-6 ul {
+      color: #374151 !important;
+      margin: 1rem 0 !important;
+      padding-left: 1.5rem !important;
+    }
+    
+    .dark .space-y-6 ul {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 li {
+      color: #374151 !important;
+      margin-bottom: 0.5rem !important;
+      line-height: 1.75 !important;
+    }
+    
+    .dark .space-y-6 li {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 ol {
+      color: #374151 !important;
+      margin: 1rem 0 !important;
+      padding-left: 1.5rem !important;
+    }
+    
+    .dark .space-y-6 ol {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 li::marker {
+      color: #6b7280 !important;
+    }
+    
+    .dark .space-y-6 li::marker {
+      color: #9ca3af !important;
+    }
+    
+    .space-y-6 img {
+      max-width: 100% !important;
+      height: auto !important;
+      margin: 1.5rem 0 !important;
+      border-radius: 0.5rem !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    }
+    
+    .dark .space-y-6 img {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .space-y-6 figure {
+      margin: 1.5rem 0 !important;
+      text-align: center !important;
+    }
+    
+    .space-y-6 figcaption {
+      font-size: 0.875rem !important;
+      color: #6b7280 !important;
+      margin-top: 0.5rem !important;
+      font-style: italic !important;
+    }
+    
+    .dark .space-y-6 figcaption {
+      color: #9ca3af !important;
+    }
+  </style>
+
+  <script>
+    // 复制引用功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const copyBtn = document.getElementById('copy-citation-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+          const citation = document.querySelector('pre').textContent;
+          navigator.clipboard.writeText(citation).then(() => {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = '已复制!';
+            copyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+            copyBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+            
+            setTimeout(() => {
+              copyBtn.textContent = originalText;
+              copyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+              copyBtn.classList.add('bg-brand-600', 'hover:bg-brand-700');
+            }, 2000);
+          }).catch(err => {
+            console.error('复制失败:', err);
+            alert('复制失败，请手动选择文本复制');
+          });
+        });
+      }
+    });
+  </script>
+</BaseLayout>

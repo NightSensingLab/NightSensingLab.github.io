@@ -77,7 +77,11 @@ const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
                 <span class="px-2 py-1 text-xs bg-brand-500/20 text-brand-300 rounded-full">推荐</span>
               )}
             </div>
-            <h3 class="mb-3 font-semibold text-lg leading-tight group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors duration-300">{pub.data.title}</h3>
+            <h3 class="mb-3 font-semibold text-lg leading-tight group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors duration-300">
+              <a href={`/publications/${pub.slug}`} class="hover:underline">
+                {pub.data.title}
+              </a>
+            </h3>
             <p class="mb-4 text-sm text-neutral-600 dark:text-neutral-400">{pub.data.authors.join(', ')}</p>
             <div class="mb-4 flex flex-wrap gap-2">
               {pub.data.tags.slice(0, 3).map((tag) => (

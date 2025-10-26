@@ -4,6 +4,9 @@ role: "Graduate"
 affiliation: "广州大学地理科学与遥感学院"
 avatar: "/images/tanxiujuan.png"
 bio: "谭秀娟同学，2025年GIS专业硕士毕业，研究生期间主要从事天文台址质量评估等方面的研究。"
+education: 
+  - "硕士，广州大学地理学与遥感学院，地图学与地理信息系统"
+
 researchInterests: ["夜间灯光", "天文台选址", "环境监测"]
 publications:
   - "谭秀娟, 吴志峰, & 郑子豪. (2025). 中国主要光学天文台址观测环境质量综合评估. 地理与地理信息科学, 41(2)."
