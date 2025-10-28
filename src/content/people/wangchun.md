@@ -2,7 +2,7 @@
 name: "王淳"
 role: "Master"
 affiliation: "广州大学地理学与遥感学院"
-avatar: "/images/placeholder.svg"
+avatar: "/images/wangchun.jpg"
 bio: "王淳同学，研一，目前专注于灯光渔业相关的研究。"
 education: 
   - "硕士（在读），广州大学地理学与遥感学院，地图学与地理信息系统"
