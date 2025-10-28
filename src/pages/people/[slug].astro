@@ -79,15 +79,15 @@ function formatPublication(pub: string, authorName: string | string[]) {
 
     <!-- 个人信息头部 -->
     <div class="mb-12">
-      <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-10">
         <!-- 头像 -->
         <div class="flex-shrink-0">
           {person.data.avatar ? (
             <img src={person.data.avatar} alt={person.data.name} 
-                 class="w-32 h-32 rounded-full object-cover" />
+                 class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover shadow-lg" />
           ) : (
-            <div class="w-32 h-32 rounded-full bg-neutral-800 flex items-center justify-center">
-              <span class="text-4xl font-semibold text-neutral-400">
+            <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-neutral-800 flex items-center justify-center shadow-lg">
+              <span class="text-5xl md:text-6xl font-semibold text-neutral-400">
                 {person.data.name.charAt(0)}
               </span>
             </div>
@@ -96,9 +96,9 @@ function formatPublication(pub: string, authorName: string | string[]) {
 
         <!-- 基本信息 -->
         <div class="flex-1">
-          <h1 class="text-4xl font-bold mb-4">{person.data.name}</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-3">{person.data.name}</h1>
           <p class="text-xl text-brand-400 mb-2">{person.data.role}</p>
-          <p class="text-lg text-neutral-600 dark:text-neutral-300 mb-4">{person.data.affiliation}</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-300 mb-5">{person.data.affiliation}</p>
           
           {person.data.bio && (
             <p class="text-neutral-700 dark:text-neutral-200 leading-relaxed">{person.data.bio}</p>
