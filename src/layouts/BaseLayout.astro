@@ -12,7 +12,7 @@ const { title, description = "NightSensingLab - 专注于夜间城市环境监�
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -20,6 +20,15 @@ const { title, description = "NightSensingLab - 专注于夜间城市环境监�
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- 在页面加载前应用主题，避免闪烁 -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <SiteHeader />

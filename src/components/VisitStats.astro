@@ -1,0 +1,153 @@
+---
+// 访问统计组件
+// 支持两种模式：
+// 1. 使用51.la统计（推荐）- 需要配置 siteId
+// 2. 简单客户端统计（显示当前访问者信息）
+
+interface Props {
+  mode?: '51la' | 'simple';
+  siteId?: string; // 51.la 站点ID
+}
+
+const { mode = 'simple', siteId = '' } = Astro.props;
+---
+
+<!-- 访问统计区域 -->
+<div id="visit-stats" class="flex flex-col items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 sm:flex-row sm:gap-4">
+  {mode === '51la' && siteId ? (
+    <!-- 51.la 统计代码 -->
+    <>
+      <script
+        type="text/javascript"
+        dangerouslySetInnerHTML={`
+          var _51la = _51la || [];
+          _51la.push({id: "${siteId}", ck: "${siteId}"});
+          (function() {
+            var la = document.createElement("script");
+            la.type = "text/javascript";
+            la.async = true;
+            la.src = "https://js.users.51.la/${siteId}.js";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(la, s);
+          })();
+        `}
+      />
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M3.055 11H3a10.001 10.001 0 005.458 8.946M3.055 11a10.001 10.001 0 0118.89 0M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 0a10.001 10.001 0 01-5.458 8.946M21 11a10.001 10.001 0 00-5.458-8.946M9.458 19.946A10.001 10.001 0 0115 11m-5.542 8.946a10.001 10.001 0 005.542-8.946m0 0a10.001 10.001 0 015.542 8.946"></path>
+        </svg>
+        <span>访问统计由 <a href="https://www.51.la" target="_blank" rel="noopener" class="hover:text-brand-400 transition-colors">51.la</a> 提供</span>
+      </div>
+    </>
+  ) : (
+    <!-- 简单客户端统计 -->
+    <div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+      <div class="flex items-center gap-1.5 whitespace-nowrap" id="visitor-location">
+        <svg class="w-3.5 h-3.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M3.055 11H3a10.001 10.001 0 005.458 8.946M3.055 11a10.001 10.001 0 0118.89 0M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 0a10.001 10.001 0 01-5.458 8.946M21 11a10.001 10.001 0 00-5.458-8.946M12 2v20M2 12h20"></path>
+        </svg>
+        <span class="text-xs">加载中...</span>
+      </div>
+      <div class="flex items-center gap-1.5 whitespace-nowrap" id="visit-count">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+        </svg>
+        <span class="text-xs">访问: <span id="count-number" class="font-medium">-</span></span>
+      </div>
+    </div>
+  )}
+</div>
+
+{mode === 'simple' && (
+  <script>
+    // 简单访问统计脚本
+    (function() {
+      // 获取访问者IP和位置信息（使用多个备用API）
+      async function fetchVisitorInfo() {
+        const locationEl = document.getElementById('visitor-location');
+        if (!locationEl) return;
+
+        // API列表（按优先级排序）
+        const apis = [
+          { url: 'https://ipapi.co/json/', parser: (data) => ({ city: data.city, country: data.country_name }) },
+          { url: 'https://ip-api.com/json/?fields=status,message,city,country', parser: (data) => ({ city: data.city, country: data.country }) },
+          { url: 'https://api.ipify.org?format=json', parser: () => null }, // 仅获取IP，不解析位置
+        ];
+
+        for (const api of apis) {
+          try {
+            const response = await fetch(api.url, { 
+              method: 'GET',
+              headers: { 'Accept': 'application/json' }
+            });
+            
+            if (!response.ok) continue;
+            
+            const data = await response.json();
+            const location = api.parser(data);
+            
+            if (location && location.country) {
+              const locationText = location.city 
+                ? `${location.city}, ${location.country}` 
+                : location.country;
+              
+              locationEl.innerHTML = `
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M3.055 11H3a10.001 10.001 0 005.458 8.946M3.055 11a10.001 10.001 0 0118.89 0M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 0a10.001 10.001 0 01-5.458 8.946M21 11a10.001 10.001 0 00-5.458-8.946M9.458 19.946A10.001 10.001 0 0115 11m-5.542 8.946a10.001 10.001 0 005.542-8.946m0 0a10.001 10.001 0 015.542 8.946"></path>
+                </svg>
+                <span class="text-xs">${locationText}</span>
+              `;
+              return; // 成功获取，退出循环
+            }
+          } catch (error) {
+            // 继续尝试下一个API
+            continue;
+          }
+        }
+
+        // 所有API都失败，显示默认信息
+        locationEl.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M3.055 11H3a10.001 10.001 0 005.458 8.946M3.055 11a10.001 10.001 0 0118.89 0M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 0a10.001 10.001 0 01-5.458 8.946M21 11a10.001 10.001 0 00-5.458-8.946M9.458 19.946A10.001 10.001 0 0115 11m-5.542 8.946a10.001 10.001 0 005.542-8.946m0 0a10.001 10.001 0 015.542 8.946"></path>
+          </svg>
+          <span class="text-xs">加载中...</span>
+        `;
+      }
+
+      // 更新访问次数（使用localStorage，仅统计当前用户）
+      function updateVisitCount() {
+        const countEl = document.getElementById('count-number');
+        if (!countEl) return;
+
+        const key = 'nightsensinglab_visit_count';
+        const lastVisitKey = 'nightsensinglab_last_visit';
+        const today = new Date().toDateString();
+        
+        let count = parseInt(localStorage.getItem(key) || '0');
+        const lastVisit = localStorage.getItem(lastVisitKey);
+
+        // 如果是新的一天，增加访问次数
+        if (lastVisit !== today) {
+          count += 1;
+          localStorage.setItem(key, count.toString());
+          localStorage.setItem(lastVisitKey, today);
+        }
+
+        countEl.textContent = count.toString();
+      }
+
+      // 页面加载时执行
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          fetchVisitorInfo();
+          updateVisitCount();
+        });
+      } else {
+        fetchVisitorInfo();
+        updateVisitCount();
+      }
+    })();
+  </script>
+)}
+

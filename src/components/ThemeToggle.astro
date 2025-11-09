@@ -23,7 +23,7 @@ const id = 'theme-toggle';
       iconMoon?.classList.add('hidden');
     }
   };
-  const pref = localStorage.getItem(storageKey) || 'dark';
+  const pref = localStorage.getItem(storageKey) || 'light';
   apply(pref);
   btn?.addEventListener('click', () => {
     const next = root.classList.contains('dark') ? 'light' : 'dark';

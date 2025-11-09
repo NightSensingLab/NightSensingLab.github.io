@@ -1,18 +1,35 @@
 ---
+import VisitStats from './VisitStats.astro';
+
 const links = [
   { label: 'ORCID', href: '#' },
   { label: 'Scholar', href: '#' },
   { label: 'GitHub', href: 'https://github.com/NightSensingLab' },
 ];
+
+// 访问统计配置
+// 如果使用51.la，请在这里填写你的站点ID
+// 如果使用简单模式，保持为空字符串
+const visitStatsMode = 'simple'; // '51la' 或 'simple'
+const visitStatsSiteId = ''; // 51.la 站点ID，例如: '12345678'
 ---
 <footer class="mt-20 border-t border-neutral-200/50 bg-gradient-to-r from-neutral-100/50 to-neutral-200/50 backdrop-blur-sm dark:border-neutral-800/50 dark:bg-gradient-to-r dark:from-neutral-900/50 dark:to-neutral-800/50">
-  <div class="container-page py-12 text-sm text-neutral-600 dark:text-neutral-400">
-    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-      <div>
+  <div class="mx-auto max-w-5xl px-4 py-8 text-sm text-neutral-600 dark:text-neutral-400 md:px-6 lg:px-8">
+    <!-- 三栏布局：左侧、中间（统计）、右侧 -->
+    <div class="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
+      <!-- 左侧：品牌和版权 -->
+      <div class="flex-shrink-0 text-center md:text-left">
         <div class="font-bold text-xl gradient-text mb-2">NightSensingLab</div>
         <div class="text-neutral-500 dark:text-neutral-500">© {new Date().getFullYear()} All rights reserved.</div>
       </div>
-      <nav class="flex gap-6">
+      
+      <!-- 中间：访问统计（垂直居中） -->
+      <div class="flex-shrink-0">
+        <VisitStats mode={visitStatsMode} siteId={visitStatsSiteId} />
+      </div>
+      
+      <!-- 右侧：导航链接 -->
+      <nav class="flex flex-shrink-0 gap-6 text-center md:text-right">
         {links.map((l) => (
           <a class="hover:text-brand-600 hover:scale-110 transition-all duration-300 font-medium dark:hover:text-brand-400" href={l.href} target="_blank" rel="noopener">{l.label}</a>
         ))}
