@@ -68,21 +68,51 @@ const { mode = 'simple', siteId = '' } = Astro.props;
         const locationEl = document.getElementById('visitor-location');
         if (!locationEl) return;
 
+        // 带超时的fetch函数
+        const fetchWithTimeout = (url, options = {}, timeout = 5000) => {
+          return Promise.race([
+            fetch(url, options),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('请求超时')), timeout)
+            )
+          ]);
+        };
+
         // API列表（按优先级排序）
         const apis = [
-          { url: 'https://ipapi.co/json/', parser: (data) => ({ city: data.city, country: data.country_name }) },
-          { url: 'https://ip-api.com/json/?fields=status,message,city,country', parser: (data) => ({ city: data.city, country: data.country }) },
-          { url: 'https://api.ipify.org?format=json', parser: () => null }, // 仅获取IP，不解析位置
+          { 
+            url: 'https://ipapi.co/json/', 
+            parser: (data) => ({ city: data.city, country: data.country_name }),
+            timeout: 5000
+          },
+          { 
+            url: 'https://ip-api.com/json/?fields=status,message,city,country', 
+            parser: (data) => data.status === 'success' ? { city: data.city, country: data.country } : null,
+            timeout: 5000
+          },
+          { 
+            url: 'https://api.country.is/', 
+            parser: (data) => ({ country: data.country }),
+            timeout: 5000
+          },
+          { 
+            url: 'https://ipwho.is/', 
+            parser: (data) => data.success ? { city: data.city, country: data.country } : null,
+            timeout: 5000
+          }
         ];
 
         for (const api of apis) {
           try {
-            const response = await fetch(api.url, { 
+            const response = await fetchWithTimeout(api.url, { 
               method: 'GET',
               headers: { 'Accept': 'application/json' }
-            });
+            }, api.timeout);
             
-            if (!response.ok) continue;
+            if (!response.ok) {
+              console.log(`API ${api.url} 响应错误: ${response.status}`);
+              continue;
+            }
             
             const data = await response.json();
             const location = api.parser(data);
@@ -101,17 +131,18 @@ const { mode = 'simple', siteId = '' } = Astro.props;
               return; // 成功获取，退出循环
             }
           } catch (error) {
+            console.log(`API ${api.url} 请求失败:`, error.message);
             // 继续尝试下一个API
             continue;
           }
         }
 
-        // 所有API都失败，显示默认信息
+        // 所有API都失败，显示未知
         locationEl.innerHTML = `
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M3.055 11H3a10.001 10.001 0 005.458 8.946M3.055 11a10.001 10.001 0 0118.89 0M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 0a10.001 10.001 0 01-5.458 8.946M21 11a10.001 10.001 0 00-5.458-8.946M9.458 19.946A10.001 10.001 0 0115 11m-5.542 8.946a10.001 10.001 0 005.542-8.946m0 0a10.001 10.001 0 015.542 8.946"></path>
           </svg>
-          <span class="text-xs">加载中...</span>
+          <span class="text-xs">未知</span>
         `;
       }
 
@@ -120,21 +151,27 @@ const { mode = 'simple', siteId = '' } = Astro.props;
         const countEl = document.getElementById('count-number');
         if (!countEl) return;
 
-        const key = 'nightsensinglab_visit_count';
-        const lastVisitKey = 'nightsensinglab_last_visit';
-        const today = new Date().toDateString();
+        const countKey = 'nightsensinglab_visit_count';
+        const sessionKey = 'nightsensinglab_session_visited';
         
-        let count = parseInt(localStorage.getItem(key) || '0');
-        const lastVisit = localStorage.getItem(lastVisitKey);
-
-        // 如果是新的一天，增加访问次数
-        if (lastVisit !== today) {
+        // 检查是否是当前会话的首次访问
+        const isNewSession = !sessionStorage.getItem(sessionKey);
+        
+        if (isNewSession) {
+          // 新会话（关闭页面后重新打开），增加计数
+          let count = parseInt(localStorage.getItem(countKey) || '0');
           count += 1;
-          localStorage.setItem(key, count.toString());
-          localStorage.setItem(lastVisitKey, today);
+          localStorage.setItem(countKey, count.toString());
+          
+          // 标记当前会话已访问
+          sessionStorage.setItem(sessionKey, 'true');
+          
+          countEl.textContent = count.toString();
+        } else {
+          // 当前会话内（刷新页面），不增加计数，只显示当前计数
+          const count = parseInt(localStorage.getItem(countKey) || '0');
+          countEl.textContent = count.toString();
         }
-
-        countEl.textContent = count.toString();
       }
 
       // 页面加载时执行
