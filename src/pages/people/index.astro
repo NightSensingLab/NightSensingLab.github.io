@@ -10,6 +10,7 @@ const groupedPeople = {
   Postdoc: people.filter(p => p.data.role === 'Postdoc').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
   PhD: people.filter(p => p.data.role === 'PhD').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
   Master: people.filter(p => p.data.role === 'Master').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
+  Undergraduate: people.filter(p => p.data.role === 'Undergraduate').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
   Graduate: people.filter(p => p.data.role === 'Graduate').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
   Alumni: people.filter(p => p.data.role === 'Alumni').sort((a, b) => a.data.displayOrder - b.data.displayOrder),
 };
@@ -19,6 +20,7 @@ const roleLabels = {
   Postdoc: 'Postdoctoral Researchers',
   PhD: 'PhD Students',
   Master: 'Master Students',
+  Undergraduate: 'Undergraduate Students',
   Graduate: 'Graduate Students',
   Alumni: 'Alumni',
 };

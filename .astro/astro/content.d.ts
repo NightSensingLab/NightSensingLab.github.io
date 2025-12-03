@@ -157,14 +157,14 @@ declare module 'astro:content' {
   slug: "pollution-prediction-model";
   body: string;
   collection: "data-products";
-  data: InferEntrySchema<"data-products">
+  data: any
 } & { render(): Render[".md"] };
 "urban-air-quality-dataset.md": {
 	id: "urban-air-quality-dataset.md";
   slug: "urban-air-quality-dataset";
   body: string;
   collection: "data-products";
-  data: InferEntrySchema<"data-products">
+  data: any
 } & { render(): Render[".md"] };
 };
 "news": {
@@ -173,35 +173,35 @@ declare module 'astro:content' {
   slug: "2025-03-03-grant-awarded";
   body: string;
   collection: "news";
-  data: InferEntrySchema<"news">
+  data: any
 } & { render(): Render[".md"] };
 "2025-08-15-conference-presentation.md": {
 	id: "2025-08-15-conference-presentation.md";
   slug: "2025-08-15-conference-presentation";
   body: string;
   collection: "news";
-  data: InferEntrySchema<"news">
+  data: any
 } & { render(): Render[".md"] };
 "2025-09-01-new-member.md": {
 	id: "2025-09-01-new-member.md";
   slug: "2025-09-01-new-member";
   body: string;
   collection: "news";
-  data: InferEntrySchema<"news">
+  data: any
 } & { render(): Render[".md"] };
 "2025-09-27-IG-paper-published.md": {
 	id: "2025-09-27-IG-paper-published.md";
   slug: "2025-09-27-ig-paper-published";
   body: string;
   collection: "news";
-  data: InferEntrySchema<"news">
+  data: any
 } & { render(): Render[".md"] };
 "2025-10-24-attend-conference.md": {
 	id: "2025-10-24-attend-conference.md";
   slug: "2025-10-24-attend-conference";
   body: string;
   collection: "news";
-  data: InferEntrySchema<"news">
+  data: any
 } & { render(): Render[".md"] };
 };
 "people": {
@@ -210,56 +210,63 @@ declare module 'astro:content' {
   slug: "lijiayue";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "lingzhenxiang.md": {
 	id: "lingzhenxiang.md";
   slug: "lingzhenxiang";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "liuguangyuan.md": {
 	id: "liuguangyuan.md";
   slug: "liuguangyuan";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "pengkeying.md": {
 	id: "pengkeying.md";
   slug: "pengkeying";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
+} & { render(): Render[".md"] };
+"tanmanqing.md": {
+	id: "tanmanqing.md";
+  slug: "tanmanqing";
+  body: string;
+  collection: "people";
+  data: any
 } & { render(): Render[".md"] };
 "tanxiujuan.md": {
 	id: "tanxiujuan.md";
   slug: "tanxiujuan";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "wangchun.md": {
 	id: "wangchun.md";
   slug: "wangchun";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "wuzhifeng.md": {
 	id: "wuzhifeng.md";
   slug: "wuzhifeng";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 "zhengzihao.md": {
 	id: "zhengzihao.md";
   slug: "zhengzihao";
   body: string;
   collection: "people";
-  data: InferEntrySchema<"people">
+  data: any
 } & { render(): Render[".md"] };
 };
 "projects": {
@@ -268,14 +275,21 @@ declare module 'astro:content' {
   slug: "2024-gzkeji-zhengzh";
   body: string;
   collection: "projects";
-  data: InferEntrySchema<"projects">
+  data: any
 } & { render(): Render[".md"] };
 "2025-NSFC-ZhengZH.md": {
 	id: "2025-NSFC-ZhengZH.md";
   slug: "2025-nsfc-zhengzh";
   body: string;
   collection: "projects";
-  data: InferEntrySchema<"projects">
+  data: any
+} & { render(): Render[".md"] };
+"2025-NanHai-ZhengZH.md": {
+	id: "2025-NanHai-ZhengZH.md";
+  slug: "2025-nanhai-zhengzh";
+  body: string;
+  collection: "projects";
+  data: any
 } & { render(): Render[".md"] };
 };
 "publications": {
@@ -284,21 +298,21 @@ declare module 'astro:content' {
   slug: "2021-zhengzh-gec";
   body: string;
   collection: "publications";
-  data: InferEntrySchema<"publications">
+  data: any
 } & { render(): Render[".md"] };
 "2025-lingzx-IG.md": {
 	id: "2025-lingzx-IG.md";
   slug: "2025-lingzx-ig";
   body: string;
   collection: "publications";
-  data: InferEntrySchema<"publications">
+  data: any
 } & { render(): Render[".md"] };
 "2025-zhengzh-RSE.md": {
 	id: "2025-zhengzh-RSE.md";
   slug: "2025-zhengzh-rse";
   body: string;
   collection: "publications";
-  data: InferEntrySchema<"publications">
+  data: any
 } & { render(): Render[".md"] };
 };
 
@@ -310,5 +324,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("./../../src/content/config.js");
+	export type ContentConfig = never;
 }
