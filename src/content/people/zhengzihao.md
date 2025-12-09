@@ -13,6 +13,7 @@ education:
 email: "zhengzihao@gzhu.edu.cn"
 office: "理学实验楼703室"
 publications:
+  - "Tan, M., Chen, Y., Wu, Z., & Zheng, Z.* (2025). Uncertainty and short- long-term dynamics of ecosystem services under future urbanization in Shenzhen. Environment Development and Sustainability,1-25."
   - "Ling, Z., Meng, X., Zheng, Z.*, Cao, Z.*, Hu, Z., Jiang, B., ... & Wu, Z. (2025). A dual-perspective evaluation framework for urban light exposure: integrating top-down visibility and bottom-up occlusion. Information Geography, 100031."
   - "Guo, G., Chen, L., Cao, Z., Zheng, Z., Wu, Z., & Chen, Y. (2025). Investigating the vertical thermal of urban building facades using one-year IoT sensor data. Energy and Buildings, 116503."
   - "Guo, Y., Wu, Z.*, Zheng, Z.*, Huang, X., & Hu, Z. (2025). Summer Thermal Comfort Zoning Studies of Mainland China Based on the Comprehensive Heat Index. International Journal of Climatology, e70035."
@@ -47,7 +48,6 @@ publications:
   - "胡应龙, 陈颖彪, 郑子豪, 吴志峰, 李娟娟, & 杨智威. (2018). 广州市生态系统服务价值空间异质性变化. 热带地理, 38(4), 475-486."
   - "郑子豪, 陈颖彪, 千庆兰, 李勇, & 谢锦鹏. (2016). 基于三维模型的城市局地微气候模拟.地球信息科学学报, 18(9), 1199-1208."
   - "郑子豪, 陈颖彪, 吴志峰, & 胡应龙. (2017). 基于多源遥感的城市生态用地识别及生态风险评价. 城市观察,(03):19-30."
-  
 projects:
   - "多源彩色夜光影像支持下的广州市室外照明辐射特征与人群暴露风险研究（国家自然科学基金青年项目，主持，30万, 2025-2027）"
   - "粤港澳大湾区夜间光环境的光谱特征识别及其分析（广州市基础与应用基础研究, 主持，5万, 2024-2025）"
@@ -68,12 +68,13 @@ socialServices:
   - "《地质灾害与环境保护》 2025- 青年编委"
   - "40余种SCI/SSCI期刊审稿人"
 awards:
+  - "2025年 2025一带一路暨金砖国家技能发展与技术创新大赛时空智能应用创新赛项（教师组）二等奖"
   - "2018年 广东省优秀学生（研究生阶段）"
   - "2020年 第8届高校GIS论坛优秀论文奖"
   - "2021年 国家优秀自费留学生奖学金（B类） 1/50"
   - "2022年 第22届中国遥感大会青年优秀论文奖"
   - "2023年 中国遥感优秀成果一等奖"
-  - "2024年 广州大学“课程思政”优秀教学案例"
+  - "2024年 广州大学课程思政优秀教学案例"
   - "2024年 中国知网高被引学者Top5%"
 links:
   orcid: "0000-0002-0700-2127"

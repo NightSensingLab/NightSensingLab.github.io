@@ -168,6 +168,13 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "news": {
+"2025-01-15-tanmanqing-paper-published.md": {
+	id: "2025-01-15-tanmanqing-paper-published.md";
+  slug: "2025-01-15-tanmanqing-paper-published";
+  body: string;
+  collection: "news";
+  data: any
+} & { render(): Render[".md"] };
 "2025-03-03-grant-awarded.md": {
 	id: "2025-03-03-grant-awarded.md";
   slug: "2025-03-03-grant-awarded";
@@ -199,6 +206,13 @@ declare module 'astro:content' {
 "2025-10-24-attend-conference.md": {
 	id: "2025-10-24-attend-conference.md";
   slug: "2025-10-24-attend-conference";
+  body: string;
+  collection: "news";
+  data: any
+} & { render(): Render[".md"] };
+"2025-12-07-competition-award.md": {
+	id: "2025-12-07-competition-award.md";
+  slug: "2025-12-07-competition-award";
   body: string;
   collection: "news";
   data: any
@@ -303,6 +317,13 @@ declare module 'astro:content' {
 "2025-lingzx-IG.md": {
 	id: "2025-lingzx-IG.md";
   slug: "2025-lingzx-ig";
+  body: string;
+  collection: "publications";
+  data: any
+} & { render(): Render[".md"] };
+"2025-tanmq-EDS.md": {
+	id: "2025-tanmq-EDS.md";
+  slug: "2025-tanmq-eds";
   body: string;
   collection: "publications";
   data: any
