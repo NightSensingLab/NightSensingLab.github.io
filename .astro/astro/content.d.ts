@@ -157,14 +157,14 @@ declare module 'astro:content' {
   slug: "pollution-prediction-model";
   body: string;
   collection: "data-products";
-  data: any
+  data: InferEntrySchema<"data-products">
 } & { render(): Render[".md"] };
 "urban-air-quality-dataset.md": {
 	id: "urban-air-quality-dataset.md";
   slug: "urban-air-quality-dataset";
   body: string;
   collection: "data-products";
-  data: any
+  data: InferEntrySchema<"data-products">
 } & { render(): Render[".md"] };
 };
 "news": {
@@ -173,49 +173,56 @@ declare module 'astro:content' {
   slug: "2025-01-15-tanmanqing-paper-published";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-03-03-grant-awarded.md": {
 	id: "2025-03-03-grant-awarded.md";
   slug: "2025-03-03-grant-awarded";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-08-15-conference-presentation.md": {
 	id: "2025-08-15-conference-presentation.md";
   slug: "2025-08-15-conference-presentation";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-09-01-new-member.md": {
 	id: "2025-09-01-new-member.md";
   slug: "2025-09-01-new-member";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-09-27-IG-paper-published.md": {
 	id: "2025-09-27-IG-paper-published.md";
   slug: "2025-09-27-ig-paper-published";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-10-24-attend-conference.md": {
 	id: "2025-10-24-attend-conference.md";
   slug: "2025-10-24-attend-conference";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 "2025-12-07-competition-award.md": {
 	id: "2025-12-07-competition-award.md";
   slug: "2025-12-07-competition-award";
   body: string;
   collection: "news";
-  data: any
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
+"2025-12-12-cnki-top5-scholar.md": {
+	id: "2025-12-12-cnki-top5-scholar.md";
+  slug: "2025-12-12-cnki-top5-scholar";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
 };
 "people": {
@@ -224,63 +231,63 @@ declare module 'astro:content' {
   slug: "lijiayue";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "lingzhenxiang.md": {
 	id: "lingzhenxiang.md";
   slug: "lingzhenxiang";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "liuguangyuan.md": {
 	id: "liuguangyuan.md";
   slug: "liuguangyuan";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "pengkeying.md": {
 	id: "pengkeying.md";
   slug: "pengkeying";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "tanmanqing.md": {
 	id: "tanmanqing.md";
   slug: "tanmanqing";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "tanxiujuan.md": {
 	id: "tanxiujuan.md";
   slug: "tanxiujuan";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "wangchun.md": {
 	id: "wangchun.md";
   slug: "wangchun";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "wuzhifeng.md": {
 	id: "wuzhifeng.md";
   slug: "wuzhifeng";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 "zhengzihao.md": {
 	id: "zhengzihao.md";
   slug: "zhengzihao";
   body: string;
   collection: "people";
-  data: any
+  data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
 };
 "projects": {
@@ -289,21 +296,21 @@ declare module 'astro:content' {
   slug: "2024-gzkeji-zhengzh";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "2025-NSFC-ZhengZH.md": {
 	id: "2025-NSFC-ZhengZH.md";
   slug: "2025-nsfc-zhengzh";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "2025-NanHai-ZhengZH.md": {
 	id: "2025-NanHai-ZhengZH.md";
   slug: "2025-nanhai-zhengzh";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 };
 "publications": {
@@ -312,28 +319,28 @@ declare module 'astro:content' {
   slug: "2021-zhengzh-gec";
   body: string;
   collection: "publications";
-  data: any
+  data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
 "2025-lingzx-IG.md": {
 	id: "2025-lingzx-IG.md";
   slug: "2025-lingzx-ig";
   body: string;
   collection: "publications";
-  data: any
+  data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
 "2025-tanmq-EDS.md": {
 	id: "2025-tanmq-EDS.md";
   slug: "2025-tanmq-eds";
   body: string;
   collection: "publications";
-  data: any
+  data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
 "2025-zhengzh-RSE.md": {
 	id: "2025-zhengzh-RSE.md";
   slug: "2025-zhengzh-rse";
   body: string;
   collection: "publications";
-  data: any
+  data: InferEntrySchema<"publications">
 } & { render(): Render[".md"] };
 };
 
@@ -345,5 +352,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("./../../src/content/config.js");
 }

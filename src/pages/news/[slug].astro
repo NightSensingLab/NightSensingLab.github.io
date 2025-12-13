@@ -1,0 +1,219 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const news = await getCollection('news');
+  return news.map((item) => ({
+    params: { slug: item.slug },
+    props: { newsItem: item },
+  }));
+}
+
+const { newsItem } = Astro.props;
+const { Content } = await newsItem.render();
+---
+
+<BaseLayout title={`${newsItem.data.title} - NightSensingLab`}>
+  <div class="container-page py-12">
+    <!-- 返回按钮 -->
+    <div class="mb-8">
+      <a href="/news" class="inline-flex items-center text-brand-400 hover:text-brand-300">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        返回新闻列表
+      </a>
+    </div>
+
+    <!-- 新闻基本信息 -->
+    <div class="mb-12">
+      <div class="card p-8">
+        <!-- 标题 -->
+        <h1 class="text-3xl font-bold mb-6 leading-tight">{newsItem.data.title}</h1>
+        
+        <!-- 日期和标签 -->
+        <div class="mb-6 flex flex-wrap items-center gap-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span class="text-neutral-600 dark:text-neutral-400">{newsItem.data.date}</span>
+          </div>
+          {newsItem.data.featured && (
+            <span class="px-3 py-1 text-sm bg-brand-500/20 text-brand-600 dark:text-brand-300 rounded-full border border-brand-500/30">
+              重要
+            </span>
+          )}
+        </div>
+
+        <!-- 标签 -->
+        {newsItem.data.tags && newsItem.data.tags.length > 0 && (
+          <div class="mb-6">
+            <div class="flex flex-wrap gap-2">
+              {newsItem.data.tags.map((tag) => (
+                <span class="rounded-full bg-brand-100 dark:bg-brand-900/30 px-3 py-1 text-sm text-brand-700 dark:text-brand-300 border border-brand-300 dark:border-brand-700/50">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- 摘要 -->
+        {newsItem.data.excerpt && (
+          <div class="mb-6">
+            <p class="text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed italic border-l-4 border-brand-400 pl-4">
+              {newsItem.data.excerpt}
+            </p>
+          </div>
+        )}
+
+        <!-- 图片展示 -->
+        {newsItem.data.pictures && newsItem.data.pictures.length > 0 && (
+          <div class="mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {newsItem.data.pictures.map((picture, index) => {
+                const encodedPicture = picture.includes('%') ? picture.replace(/%/g, '%25') : picture;
+                return (
+                  <div class="relative overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
+                    <img 
+                      src={encodedPicture} 
+                      alt={`${newsItem.data.title} - Image ${index + 1}`}
+                      class="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <!-- 新闻详细内容 -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-brand-400 mb-3">详细内容</h2>
+          <div class="bg-neutral-100 dark:bg-neutral-800 p-6 rounded-lg">
+            <div class="space-y-6 prose prose-neutral dark:prose-invert max-w-none">
+              <Content />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style is:global>
+    .space-y-6 h2 {
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #1f2937 !important;
+      margin-top: 2rem !important;
+      margin-bottom: 1rem !important;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 1px solid #d1d5db !important;
+    }
+    
+    .dark .space-y-6 h2 {
+      color: #f9fafb !important;
+      border-bottom-color: #4b5563 !important;
+    }
+    
+    .space-y-6 h3 {
+      font-size: 1.125rem !important;
+      font-weight: 600 !important;
+      color: #374151 !important;
+      margin-top: 1.5rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+    
+    .dark .space-y-6 h3 {
+      color: #e5e7eb !important;
+    }
+    
+    .space-y-6 p {
+      color: #374151 !important;
+      line-height: 1.75 !important;
+      margin-bottom: 1rem !important;
+    }
+    
+    .dark .space-y-6 p {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 strong {
+      color: #1f2937 !important;
+      font-weight: 600 !important;
+    }
+    
+    .dark .space-y-6 strong {
+      color: #f9fafb !important;
+    }
+    
+    .space-y-6 ul {
+      color: #374151 !important;
+      margin: 1rem 0 !important;
+      padding-left: 1.5rem !important;
+    }
+    
+    .dark .space-y-6 ul {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 li {
+      color: #374151 !important;
+      margin-bottom: 0.5rem !important;
+      line-height: 1.75 !important;
+    }
+    
+    .dark .space-y-6 li {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 ol {
+      color: #374151 !important;
+      margin: 1rem 0 !important;
+      padding-left: 1.5rem !important;
+    }
+    
+    .dark .space-y-6 ol {
+      color: #d1d5db !important;
+    }
+    
+    .space-y-6 li::marker {
+      color: #6b7280 !important;
+    }
+    
+    .dark .space-y-6 li::marker {
+      color: #9ca3af !important;
+    }
+    
+    .space-y-6 img {
+      max-width: 100% !important;
+      height: auto !important;
+      margin: 1.5rem 0 !important;
+      border-radius: 0.5rem !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    }
+    
+    .dark .space-y-6 img {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .space-y-6 figure {
+      margin: 1.5rem 0 !important;
+      text-align: center !important;
+    }
+    
+    .space-y-6 figcaption {
+      font-size: 0.875rem !important;
+      color: #6b7280 !important;
+      margin-top: 0.5rem !important;
+      font-style: italic !important;
+    }
+    
+    .dark .space-y-6 figcaption {
+      color: #9ca3af !important;
+    }
+  </style>
+</BaseLayout>

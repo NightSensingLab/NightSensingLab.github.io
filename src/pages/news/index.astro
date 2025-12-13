@@ -1,11 +1,51 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 
+// #region agent log
+const logPath = join(process.cwd(), '.cursor', 'debug.log');
+const log = (data) => {
+  try {
+    const logEntry = JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: data.hypothesisId || 'A',
+      location: 'news/index.astro:' + (data.line || '?'),
+      message: data.message,
+      data: data.data || {},
+      timestamp: Date.now()
+    }) + '\n';
+    writeFileSync(logPath, logEntry, { flag: 'a' });
+  } catch (e) {}
+};
+// #endregion
+
+// #region agent log
+log({ hypothesisId: 'D', line: 5, message: '开始获取news集合', data: {} });
+// #endregion
 const news = await getCollection('news');
+// #region agent log
+log({ hypothesisId: 'D', line: 6, message: 'news集合获取完成', data: { count: news.length, titles: news.map(n => n.data.title) } });
+// #endregion
+
+// #region agent log
+log({ hypothesisId: 'A', line: 7, message: '检查图片路径中的特殊字符', data: { 
+  picturesWithPercent: news.filter(n => n.data.pictures?.some(p => p.includes('%'))).map(n => ({ title: n.data.title, pictures: n.data.pictures }))
+} });
+// #endregion
+
 const sortedNews = news.sort((a, b) => 
   new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+// #region agent log
+log({ hypothesisId: 'A', line: 10, message: '排序后的news数据', data: { 
+  sortedTitles: sortedNews.map(n => n.data.title),
+  problematicPaths: sortedNews.filter(n => n.data.pictures?.some(p => p.includes('%'))).map(n => ({ title: n.data.title, paths: n.data.pictures }))
+} });
+// #endregion
 
 // 获取所有标签
 const allTags = [...new Set(news.flatMap(n => n.data.tags))];
@@ -73,11 +113,18 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
                     <div class="carousel-wrapper flex transition-transform duration-500 ease-in-out" id={`carousel-news-${index}`}>
                       <!-- Images from news md file -->
                       {item.data.pictures && item.data.pictures.length > 0 ? (
-                        item.data.pictures.map((picture, picIndex) => (
+                        item.data.pictures.map((picture, picIndex) => {
+                          // #region agent log
+                          const encodedPicture = picture.includes('%') ? picture.replace(/%/g, '%25') : picture;
+                          // #endregion
+                          return (
                           <div class="carousel-slide w-full flex-shrink-0">
-                            <img src={picture} alt={`${item.data.title} - Image ${picIndex + 1}`} class="w-full h-48 object-cover" />
+                            <img src={encodedPicture} alt={`${item.data.title} - Image ${picIndex + 1}`} 
+                                 class="w-full h-48 object-cover"
+                                 onerror={`fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:78',message:'图片加载失败',data:{originalPath:'${picture}',encodedPath:'${encodedPicture}',title:'${item.data.title}',index:${index},picIndex:${picIndex}},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});`}
+                                 onload={`fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:78',message:'图片加载成功',data:{path:'${encodedPicture}',title:'${item.data.title}'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});`} />
                           </div>
-                        ))
+                        )})
                       ) : (
                         <!-- Fallback images if no pictures are specified -->
                         <div class="carousel-slide w-full flex-shrink-0">
@@ -152,6 +199,9 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
       if (!carouselStates[slug]) {
         const carousel = document.getElementById(`carousel-${slug}`);
         const slides = carousel ? carousel.querySelectorAll('.carousel-slide') : [];
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:151',message:'初始化轮播状态',data:{slug,carouselFound:!!carousel,slidesCount:slides.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
         carouselStates[slug] = {
           currentSlide: 0,
           totalSlides: slides.length || 1
@@ -211,9 +261,18 @@ const allTags = [...new Set(news.flatMap(n => n.data.tags))];
 
     // 初始化所有轮播
     document.addEventListener('DOMContentLoaded', () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:213',message:'DOMContentLoaded事件触发',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       const articles = document.querySelectorAll('article');
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:215',message:'找到的article元素数量',data:{count:articles.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       articles.forEach((article, index) => {
         const slug = `news-${index}`; // 使用索引作为唯一标识
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/571eb0bb-bcb3-4062-a8f5-80f3c4b37368',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'news/index.astro:217',message:'初始化轮播',data:{slug,index},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
         startAutoCarousel(slug);
       });
     });

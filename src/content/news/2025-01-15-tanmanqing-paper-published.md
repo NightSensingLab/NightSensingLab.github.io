@@ -5,7 +5,10 @@ excerpt: "课题组本科生谭曼晴同学作为第一作者在环境与可持�
 featured: true
 tags: ["论文发表", "本科生"]
 pictures: [
-  "/images/news/placeholder.svg"
+  "/images/news/2025-01-15-tanmanqing-paper-published/Fig.1.png",
+  "/images/news/2025-01-15-tanmanqing-paper-published/Fig.2.png",
+  "/images/news/2025-01-15-tanmanqing-paper-published/Fig.3.png",
+  "/images/news/2025-01-15-tanmanqing-paper-published/Fig.4.png"
 ]
 ---
 
