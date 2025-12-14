@@ -5,7 +5,9 @@ excerpt: "实验室吴志峰教授、郑子豪副教授参加深圳大学自然�
 featured: true
 tags: ["学术参会", "学术报告"]
 pictures: [
-  "/images/news/2025-12-14-academic-annual-meeting/p1.png"
+  "/images/news/2025-12-14-academic-annual-meeting/p1.png",
+  "/images/news/2025-12-14-academic-annual-meeting/p2.png",
+  "/images/news/2025-12-14-academic-annual-meeting/p3.png"
 ]
 ---
 ## 会议信息
