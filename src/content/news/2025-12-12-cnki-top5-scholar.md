@@ -5,7 +5,7 @@ excerpt: "实验室郑子豪副教授入选中国知网（CNKI）2025全国高�
 featured: true
 tags: ["学术荣誉", "高被引学者"]
 pictures: [
-  "/images/news/2025-12-12-cnki-top5%/honor-CNKI-Top5%.png"
+  "/images/news/2025-12-12-cnki-top5-percent/honor-CNKI-Top5-percent.png"
 ]
 ---
 
