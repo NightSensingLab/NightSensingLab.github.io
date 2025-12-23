@@ -152,6 +152,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"data-products": {
+"ddolomites-wpaper.md": {
+	id: "ddolomites-wpaper.md";
+  slug: "ddolomites-wpaper";
+  body: string;
+  collection: "data-products";
+  data: InferEntrySchema<"data-products">
+} & { render(): Render[".md"] };
 "pollution-prediction-model.md": {
 	id: "pollution-prediction-model.md";
   slug: "pollution-prediction-model";
@@ -233,6 +240,13 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "people": {
+"feiqingxin.md": {
+	id: "feiqingxin.md";
+  slug: "feiqingxin";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
 "lijiayue.md": {
 	id: "lijiayue.md";
   slug: "lijiayue";
@@ -285,6 +299,20 @@ declare module 'astro:content' {
 "wuzhifeng.md": {
 	id: "wuzhifeng.md";
   slug: "wuzhifeng";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
+"xuqiliang.md": {
+	id: "xuqiliang.md";
+  slug: "xuqiliang";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
+"zhangyingzhao.md": {
+	id: "zhangyingzhao.md";
+  slug: "zhangyingzhao";
   body: string;
   collection: "people";
   data: InferEntrySchema<"people">

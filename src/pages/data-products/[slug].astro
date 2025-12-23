@@ -1,0 +1,246 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const dataProducts = await getCollection('data-products');
+  return dataProducts.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+
+const typeLabels = {
+  dataset: '数据集',
+  model: '模型',
+  tool: '工具',
+  indicator: '指标',
+};
+---
+
+<BaseLayout title={`${product.data.title} - Data & Tools - NightSensingLab`}>
+  <div class="container-page py-12">
+    <!-- 返回按钮 -->
+    <div class="mb-8">
+      <a href="/data-products" class="inline-flex items-center text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 transition-colors">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        返回 Data & Tools
+      </a>
+    </div>
+
+    <!-- 产品基本信息 -->
+    <div class="mb-12">
+      <div class="card p-8">
+        <!-- 标题和类型 -->
+        <div class="mb-6">
+          <div class="mb-4 flex items-center gap-3">
+            <span class="rounded-full bg-brand-500/20 dark:bg-brand-500/20 px-4 py-1.5 text-sm font-medium text-brand-700 dark:text-brand-300">
+              {typeLabels[product.data.type as keyof typeof typeLabels]}
+            </span>
+            {product.data.version && (
+              <span class="text-sm text-neutral-600 dark:text-neutral-400">版本 {product.data.version}</span>
+            )}
+            <span class="text-sm text-neutral-600 dark:text-neutral-400">
+              更新于 {new Date(product.data.lastUpdated).toLocaleDateString('zh-CN')}
+            </span>
+          </div>
+          <h1 class="text-4xl font-bold mb-4 leading-tight text-neutral-900 dark:text-white">{product.data.title}</h1>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed">{product.data.description}</p>
+        </div>
+
+        <!-- 标签 -->
+        {product.data.tags && product.data.tags.length > 0 && (
+          <div class="mb-6 flex flex-wrap gap-2">
+            {product.data.tags.map((tag) => (
+              <span class="rounded-full bg-neutral-200 dark:bg-neutral-800 px-3 py-1 text-sm text-neutral-700 dark:text-neutral-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <!-- 操作按钮 -->
+        <div class="flex flex-wrap gap-4 mb-6">
+          {product.data.downloadUrl && (
+            <a href={product.data.downloadUrl} target="_blank" rel="noopener"
+               class="inline-flex items-center px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-lg text-sm font-medium text-white transition-colors">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              下载
+            </a>
+          )}
+          {product.data.documentation && (
+            <a href={product.data.documentation} target="_blank" rel="noopener"
+               class="inline-flex items-center px-6 py-3 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg text-sm font-medium text-neutral-700 dark:text-neutral-300 transition-colors">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+              查看文档
+            </a>
+          )}
+          {product.data.citation && (
+            <button id="show-citation-btn"
+                    class="inline-flex items-center px-6 py-3 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg text-sm font-medium text-neutral-700 dark:text-neutral-300 transition-colors">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+              </svg>
+              引用格式
+            </button>
+          )}
+        </div>
+
+        <!-- 许可证信息 -->
+        {product.data.license && (
+          <div class="mb-6 p-4 bg-neutral-100 dark:bg-neutral-800/50 rounded-lg">
+            <div class="text-sm">
+              <span class="text-neutral-600 dark:text-neutral-400">许可证:</span>
+              <span class="ml-2 text-neutral-800 dark:text-neutral-300 font-medium">{product.data.license}</span>
+            </div>
+          </div>
+        )}
+
+        <!-- 详细内容 -->
+        <div class="mt-8 pt-8 border-t border-neutral-300 dark:border-neutral-700">
+          <div class="prose prose-invert dark:prose-invert max-w-none">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citation Modal -->
+    {product.data.citation && (
+      <div id="citation-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+        <div class="max-w-2xl rounded-lg bg-neutral-900 p-6 m-4">
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-lg font-semibold">引用格式</h3>
+            <button id="close-citation-btn" class="text-neutral-400 hover:text-white text-2xl leading-none">×</button>
+          </div>
+          <pre id="citation-content" class="overflow-auto rounded bg-neutral-800 p-4 text-sm text-neutral-200 whitespace-pre-wrap">{product.data.citation}</pre>
+          <div class="mt-4 flex justify-end gap-2">
+            <button id="copy-citation-btn" class="rounded bg-brand-600 px-4 py-2 text-sm hover:bg-brand-700 text-white">复制</button>
+            <button id="close-citation-btn-2" class="rounded border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800 text-neutral-300">关闭</button>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <script>
+    {product.data.citation && `
+      const showCitationBtn = document.getElementById('show-citation-btn');
+      const closeCitationBtn = document.getElementById('close-citation-btn');
+      const closeCitationBtn2 = document.getElementById('close-citation-btn-2');
+      const copyCitationBtn = document.getElementById('copy-citation-btn');
+      const citationModal = document.getElementById('citation-modal');
+
+      function showCitation() {
+        citationModal.classList.remove('hidden');
+        citationModal.classList.add('flex');
+      }
+
+      function closeCitation() {
+        citationModal.classList.add('hidden');
+        citationModal.classList.remove('flex');
+      }
+
+      function copyCitation() {
+        const content = document.getElementById('citation-content').textContent;
+        navigator.clipboard.writeText(content).then(() => {
+          alert('引用格式已复制到剪贴板');
+        });
+      }
+
+      showCitationBtn?.addEventListener('click', showCitation);
+      closeCitationBtn?.addEventListener('click', closeCitation);
+      closeCitationBtn2?.addEventListener('click', closeCitation);
+      copyCitationBtn?.addEventListener('click', copyCitation);
+
+      // 点击模态框外部关闭
+      citationModal?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          closeCitation();
+        }
+      });
+    `}
+  </script>
+
+  <style is:global>
+    .prose h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: rgb(217 119 6);
+    }
+    .dark .prose h2 {
+      color: rgb(251 191 36);
+    }
+    .prose h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: rgb(217 119 6);
+    }
+    .dark .prose h3 {
+      color: rgb(251 191 36);
+    }
+    .prose p {
+      margin-bottom: 1rem;
+      line-height: 1.75;
+      color: rgb(38 38 38);
+    }
+    .dark .prose p {
+      color: rgb(212 212 212);
+    }
+    .prose ul, .prose ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      color: rgb(38 38 38);
+    }
+    .dark .prose ul, .dark .prose ol {
+      color: rgb(212 212 212);
+    }
+    .prose li {
+      margin-bottom: 0.5rem;
+    }
+    .prose a {
+      color: rgb(217 119 6);
+      text-decoration: underline;
+    }
+    .dark .prose a {
+      color: rgb(251 191 36);
+    }
+    .prose a:hover {
+      color: rgb(180 83 9);
+    }
+    .dark .prose a:hover {
+      color: rgb(217 119 6);
+    }
+    .prose strong {
+      font-weight: 600;
+      color: rgb(217 119 6);
+    }
+    .dark .prose strong {
+      color: rgb(251 191 36);
+    }
+    .prose code {
+      background-color: rgb(229 229 229);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-size: 0.875em;
+      color: rgb(180 83 9);
+    }
+    .dark .prose code {
+      background-color: rgb(38 38 38);
+      color: rgb(251 191 36);
+    }
+  </style>
+</BaseLayout>
