@@ -47,7 +47,7 @@ const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
       </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {latestNews.map((item, index) => (
-          <a href={`/news/${item.slug}`} class="card card-hover p-6 group block" style={`animation-delay: ${index * 0.1}s`}>
+          <a href={`/news/${item.slug}`} class="card card-hover p-6 group block flex flex-col" style={`animation-delay: ${index * 0.1}s`}>
             <div class="mb-3 flex items-center gap-2">
               <div class="w-2 h-2 bg-brand-500 rounded-full"></div>
               <span class="text-sm text-brand-400 font-medium">{item.data.date}</span>
@@ -56,7 +56,16 @@ const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
               )}
             </div>
             <h3 class="mb-3 font-semibold text-lg group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors duration-300">{item.data.title}</h3>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">{item.data.excerpt}</p>
+            <p class="mb-4 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed flex-grow">{item.data.excerpt}</p>
+            {item.data.pictures && item.data.pictures.length > 0 && (
+              <div class="mt-auto overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
+                <img 
+                  src={item.data.pictures[0]} 
+                  alt={item.data.title}
+                  class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            )}
           </a>
         ))}
       </div>

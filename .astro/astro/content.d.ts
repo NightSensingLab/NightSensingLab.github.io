@@ -238,6 +238,13 @@ declare module 'astro:content' {
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
+"2026-01-01-new-year-greetings.md": {
+	id: "2026-01-01-new-year-greetings.md";
+  slug: "2026-01-01-new-year-greetings";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
 };
 "people": {
 "feiqingxin.md": {
