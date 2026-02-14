@@ -252,6 +252,13 @@ declare module 'astro:content' {
   collection: "news";
   data: any
 } & { render(): Render[".md"] };
+"2026-02-14-remote-sensing-si.md": {
+	id: "2026-02-14-remote-sensing-si.md";
+  slug: "2026-02-14-remote-sensing-si";
+  body: string;
+  collection: "news";
+  data: any
+} & { render(): Render[".md"] };
 };
 "people": {
 "feiqingxin.md": {
