@@ -12,10 +12,10 @@ const featuredPublications = publications
   .sort((a, b) => b.data.year - a.data.year)
   .slice(0, 6);
 
-// 获取最新新闻（最多5条）
+// 获取最新新闻（最多6条）
 const latestNews = news
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 5);
+  .slice(0, 6);
 
 // 获取进行中的项目
 const ongoingProjects = projects.filter(p => p.data.status === 'ongoing');
