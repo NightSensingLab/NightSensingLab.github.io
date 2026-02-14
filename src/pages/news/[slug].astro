@@ -69,19 +69,23 @@ const { Content } = await newsItem.render();
           </div>
         )}
 
-        <!-- 图片展示 -->
+        <!-- 图片展示（点击可放大） -->
         {newsItem.data.pictures && newsItem.data.pictures.length > 0 && (
-          <div class="mb-8">
+          <div class="mb-8 news-images">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               {newsItem.data.pictures.map((picture, index) => {
                 const encodedPicture = picture.includes('%') ? picture.replace(/%/g, '%25') : picture;
                 return (
-                  <div class="relative overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
+                  <div class="relative overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800 cursor-pointer news-image-item group">
                     <img 
                       src={encodedPicture} 
                       alt={`${newsItem.data.title} - Image ${index + 1}`}
-                      class="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
+                      class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                      data-src={encodedPicture}
                     />
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                      <span class="opacity-0 group-hover:opacity-100 transition-opacity text-white text-sm bg-black/50 px-3 py-1 rounded">点击放大</span>
+                    </div>
                   </div>
                 );
               })}
@@ -102,6 +106,68 @@ const { Content } = await newsItem.render();
     </div>
 
   </div>
+
+  <!-- 图片放大弹窗 -->
+  <div id="news-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4" role="dialog" aria-modal="true" aria-label="图片放大查看">
+    <button type="button" id="lightbox-close" class="absolute top-4 right-4 z-10 text-white/90 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="关闭">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+    <img id="lightbox-img" src="" alt="放大查看" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default" />
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function initNewsLightbox() {
+      const lightbox = document.getElementById('news-lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      function openLightbox(src) {
+        if (lightbox && lightboxImg) {
+          lightboxImg.src = src;
+          lightbox?.classList.remove('hidden');
+          lightbox?.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeLightbox() {
+        if (lightbox) {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // 新闻卡片图片点击（绑定到容器，避免被遮罩层拦截）
+      document.querySelectorAll('.news-image-item').forEach((item) => {
+        const img = item.querySelector('img');
+        if (!img) return;
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const src = img.dataset.src || img.src;
+          openLightbox(src);
+        });
+      });
+
+      // 详细内容中的图片点击
+      document.querySelectorAll('.space-y-6 img').forEach((img) => {
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openLightbox(e.target.src);
+        });
+      });
+
+      // 关闭弹窗
+      lightboxClose?.addEventListener('click', closeLightbox);
+      lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    });
+  </script>
 
   <style is:global>
     .space-y-6 h2 {
@@ -194,6 +260,13 @@ const { Content } = await newsItem.render();
       margin: 1.5rem 0 !important;
       border-radius: 0.5rem !important;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+      cursor: pointer !important;
+      transition: opacity 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    
+    .space-y-6 img:hover {
+      opacity: 0.95 !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1) !important;
     }
     
     .dark .space-y-6 img {
@@ -214,6 +287,26 @@ const { Content } = await newsItem.render();
     
     .dark .space-y-6 figcaption {
       color: #9ca3af !important;
+    }
+    
+    /* 新闻内容中的超链接样式 */
+    .space-y-6 a {
+      color: #2563eb !important;
+      text-decoration: underline !important;
+      text-underline-offset: 2px !important;
+      transition: color 0.2s ease !important;
+    }
+    
+    .space-y-6 a:hover {
+      color: #1d4ed8 !important;
+    }
+    
+    .dark .space-y-6 a {
+      color: #60a5fa !important;
+    }
+    
+    .dark .space-y-6 a:hover {
+      color: #93c5fd !important;
     }
   </style>
 </BaseLayout>
