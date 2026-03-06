@@ -266,8 +266,22 @@ declare module 'astro:content' {
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
+"2026-02-28-geo-info-competition-award.md": {
+	id: "2026-02-28-geo-info-competition-award.md";
+  slug: "2026-02-28-geo-info-competition-award";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
 };
 "people": {
+"duanjinxin.md": {
+	id: "duanjinxin.md";
+  slug: "duanjinxin";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
 "feiqingxin.md": {
 	id: "feiqingxin.md";
   slug: "feiqingxin";
