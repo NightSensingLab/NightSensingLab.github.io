@@ -345,6 +345,13 @@ declare module 'astro:content' {
   collection: "people";
   data: InferEntrySchema<"people">
 } & { render(): Render[".md"] };
+"xiesenxiong.md": {
+	id: "xiesenxiong.md";
+  slug: "xiesenxiong";
+  body: string;
+  collection: "people";
+  data: InferEntrySchema<"people">
+} & { render(): Render[".md"] };
 "xuqiliang.md": {
 	id: "xuqiliang.md";
   slug: "xuqiliang";

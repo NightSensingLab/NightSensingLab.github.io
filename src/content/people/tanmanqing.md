@@ -9,6 +9,6 @@ education:
 researchInterests: []
 publications:
   - "Tan, M., Chen, Y., Wu, Z., & Zheng, Z. (2025). Uncertainty and short- long-term dynamics of ecosystem services under future urbanization in Shenzhen. Environment, Development and Sustainability. https://doi.org/10.1007/s10668-025-07114-2"
-displayOrder: 3
+displayOrder: 1
 ---
 
