@@ -159,16 +159,9 @@ declare module 'astro:content' {
   collection: "data-products";
   data: InferEntrySchema<"data-products">
 } & { render(): Render[".md"] };
-"pollution-prediction-model.md": {
-	id: "pollution-prediction-model.md";
-  slug: "pollution-prediction-model";
-  body: string;
-  collection: "data-products";
-  data: InferEntrySchema<"data-products">
-} & { render(): Render[".md"] };
-"urban-air-quality-dataset.md": {
-	id: "urban-air-quality-dataset.md";
-  slug: "urban-air-quality-dataset";
+"gee-batch-exports-runner.md": {
+	id: "gee-batch-exports-runner.md";
+  slug: "gee-batch-exports-runner";
   body: string;
   collection: "data-products";
   data: InferEntrySchema<"data-products">
@@ -269,6 +262,20 @@ declare module 'astro:content' {
 "2026-02-28-geo-info-competition-award.md": {
 	id: "2026-02-28-geo-info-competition-award.md";
   slug: "2026-02-28-geo-info-competition-award";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
+"2026-04-12-ntl-special-session.md": {
+	id: "2026-04-12-ntl-special-session.md";
+  slug: "2026-04-12-ntl-special-session";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
+"2026-04-20-jiangby-jenvman-paper-published.md": {
+	id: "2026-04-20-jiangby-jenvman-paper-published.md";
+  slug: "2026-04-20-jiangby-jenvman-paper-published";
   body: string;
   collection: "news";
   data: InferEntrySchema<"news">
@@ -422,6 +429,13 @@ declare module 'astro:content' {
 "2025-zhengzh-RSE.md": {
 	id: "2025-zhengzh-RSE.md";
   slug: "2025-zhengzh-rse";
+  body: string;
+  collection: "publications";
+  data: InferEntrySchema<"publications">
+} & { render(): Render[".md"] };
+"2026-jiangby-JEM.md": {
+	id: "2026-jiangby-JEM.md";
+  slug: "2026-jiangby-jem";
   body: string;
   collection: "publications";
   data: InferEntrySchema<"publications">
