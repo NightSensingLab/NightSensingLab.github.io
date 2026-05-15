@@ -5,7 +5,8 @@ type: "tool"
 tags: ["Google Earth Engine", "Chrome Extension", "Batch Export", "Remote Sensing", "JavaScript"]
 version: "1.0.0"
 lastUpdated: "2026-05-15"
-downloadUrl: "/downloads/tools/gee-batch-exports-runner-1.0.0.zip"
+downloadUrl: "https://github.com/NightSensingLab/GEE-batch-exports/releases/download/v1.0.0/gee-batch-exports-runner-1.0.0.zip"
+documentation: "https://github.com/NightSensingLab/GEE-batch-exports"
 ---
 
 ![GEE Batch Exports Runner 宣传图](/images/data-products/gee-batch-exports-runner/marquee-promo-tile-1400x560.png)
