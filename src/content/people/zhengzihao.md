@@ -13,6 +13,7 @@ education:
 email: "zhengzihao@gzhu.edu.cn"
 office: "理学实验楼703室"
 publications:
+  - "Zhong, L., Wang, X., Zheng, Z., Zheng, Q., Liu, S., Lin, Y., Chen, Z., He, Y., Yang, P., Yu, P., Xie, Z., & Liu, X. (2026). Multispectral nighttime light remote sensing: Data, applications, and challenges. Remote Sensing of Environment, 344, 115530."
   - "Jiang, B., Xu, K., Zheng, Z.*, Li, J., Wang, H., & Mei, L. (2026). Dark sky protection in high-density urban fringe areas: Site suitability assessment for dark sky parks and light environment optimization strategies—a case study of Guangzhou. Journal of Environmental Management, 405, 129710."
   - "Tan, M., Chen, Y., Wu, Z., & Zheng, Z.* (2025). Uncertainty and short- long-term dynamics of ecosystem services under future urbanization in Shenzhen. Environment Development and Sustainability,1-25."
   - "Meng, X., Ling, Z., Chen, Y., Kuang, J., Zhang, L., Wu, Z., Zheng, Z., & Wang, J. (2025). From Coast to Inland: Nonlinear and Temperature-Mediated Urbanization Effects on Vegetation Phenology in Shandong Province, China. Remote Sensing, 17(23), 3833."

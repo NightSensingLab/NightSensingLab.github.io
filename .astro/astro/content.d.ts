@@ -280,6 +280,13 @@ declare module 'astro:content' {
   collection: "news";
   data: InferEntrySchema<"news">
 } & { render(): Render[".md"] };
+"2026-06-10-rse-multispectral-ntl-review.md": {
+	id: "2026-06-10-rse-multispectral-ntl-review.md";
+  slug: "2026-06-10-rse-multispectral-ntl-review";
+  body: string;
+  collection: "news";
+  data: InferEntrySchema<"news">
+} & { render(): Render[".md"] };
 };
 "people": {
 "duanjinxin.md": {
@@ -436,6 +443,13 @@ declare module 'astro:content' {
 "2026-jiangby-JEM.md": {
 	id: "2026-jiangby-JEM.md";
   slug: "2026-jiangby-jem";
+  body: string;
+  collection: "publications";
+  data: InferEntrySchema<"publications">
+} & { render(): Render[".md"] };
+"2026-zhongl-rse.md": {
+	id: "2026-zhongl-rse.md";
+  slug: "2026-zhongl-rse";
   body: string;
   collection: "publications";
   data: InferEntrySchema<"publications">
