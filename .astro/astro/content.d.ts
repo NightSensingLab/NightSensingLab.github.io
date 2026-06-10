@@ -166,6 +166,13 @@ declare module 'astro:content' {
   collection: "data-products";
   data: InferEntrySchema<"data-products">
 } & { render(): Render[".md"] };
+"macctrlcva.md": {
+	id: "macctrlcva.md";
+  slug: "macctrlcva";
+  body: string;
+  collection: "data-products";
+  data: InferEntrySchema<"data-products">
+} & { render(): Render[".md"] };
 };
 "news": {
 "2025-01-15-tanmanqing-paper-published.md": {
