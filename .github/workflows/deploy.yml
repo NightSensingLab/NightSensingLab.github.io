@@ -32,6 +32,9 @@ jobs:
         
       - name: Build
         run: npm run build
+
+      - name: Exclude oversized source PDF from Pages artifact
+        run: rm -f dist/papers/2026-ZhongL-RSE.pdf
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -48,5 +51,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 1200000

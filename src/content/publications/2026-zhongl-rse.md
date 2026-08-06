@@ -4,7 +4,7 @@ authors: ["Liang Zhong*", "Xinjian Wang", "Zihao Zheng", "Qiming Zheng", "Shaoya
 year: 2026
 venue: "Remote Sensing of Environment"
 doi: "10.1016/j.rse.2026.115530"
-pdf: "/papers/2026-ZhongL-RSE.pdf"
+pdf: "https://raw.githubusercontent.com/NightSensingLab/NightSensingLab.github.io/main/public/papers/2026-ZhongL-RSE.pdf"
 tags: ["nighttime light", "multispectral remote sensing", "light pollution", "review"]
 featured: true
 abstract: "A systematic review of multispectral nighttime light remote sensing data sources, applications, and challenges, highlighting future directions for sensor development, radiometric correction, data fusion, and spectral-level applications."
