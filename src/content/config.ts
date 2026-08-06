@@ -6,6 +6,7 @@ const publications = defineCollection({
     title: z.string(),
     authors: z.array(z.string()),
     year: z.number(),
+    publishedDate: z.string().optional(),
     venue: z.string(),
     doi: z.string().optional(),
     pdf: z.string().optional(),

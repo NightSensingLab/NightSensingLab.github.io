@@ -3,7 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const publications = await getCollection('publications');
-const sortedPublications = publications.sort((a, b) => b.data.year - a.data.year);
+const sortedPublications = publications.sort((a, b) => {
+  const dateA = new Date(a.data.publishedDate ?? `${a.data.year}-01-01`).getTime();
+  const dateB = new Date(b.data.publishedDate ?? `${b.data.year}-01-01`).getTime();
+  return dateB - dateA;
+});
 
 // 获取所有标签和年份
 const allTags = [...new Set(publications.flatMap(p => p.data.tags))];

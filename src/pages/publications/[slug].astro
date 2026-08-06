@@ -71,6 +71,12 @@ function formatVenue(venue: string) {
               <span class="font-medium">年份：</span>
               <span class="text-neutral-700 dark:text-neutral-200">{publication.data.year}</span>
             </div>
+            {publication.data.publishedDate && (
+              <div>
+                <span class="font-medium">发表日期：</span>
+                <span class="text-neutral-700 dark:text-neutral-200">{publication.data.publishedDate}</span>
+              </div>
+            )}
             {publication.data.doi && (
               <div>
                 <span class="font-medium">DOI：</span>

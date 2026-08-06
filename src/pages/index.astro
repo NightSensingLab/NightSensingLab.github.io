@@ -9,7 +9,11 @@ const news = await getCollection('news');
 // 获取特色论文（最多6篇）
 const featuredPublications = publications
   .filter(p => p.data.featured)
-  .sort((a, b) => b.data.year - a.data.year)
+  .sort((a, b) => {
+    const dateA = new Date(a.data.publishedDate ?? `${a.data.year}-01-01`).getTime();
+    const dateB = new Date(b.data.publishedDate ?? `${b.data.year}-01-01`).getTime();
+    return dateB - dateA;
+  })
   .slice(0, 6);
 
 // 获取最新新闻（最多6条）
