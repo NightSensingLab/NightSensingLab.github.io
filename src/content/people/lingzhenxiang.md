@@ -6,6 +6,7 @@ avatar: "/images/lingzhenxiang.png"
 bio: "凌同学专注于机器学习在城市建成环境、城市活力等方面的预测与评估工作，在机器学习和深度学习方面有丰富经验。"
 researchInterests: ["人工智能", "城市活力", "深度学习", "数据挖掘"]
 publications:
+  - "Shi, X., Ling, Z., Zheng, Z.*, Chen, Y., Qian, Q., Wu, Z., Wang, J., & Gao, F. (2026). Assessing individual-building vertical light exposure in urban environments with a residual cascade framework. Remote Sensing, 18(15), 2621."
   - "Ling, Z., Meng, X., Zheng, Z.*, Cao, Z.*, Hu, Z., Jiang, B., ... & Wu, Z. (2025). A dual-perspective evaluation framework for urban light exposure: integrating top-down visibility and bottom-up occlusion. Information Geography, 100031."
   - "Ling, Z., Meng, X., Chen, Y.*, Qian, Q., Kuang, J., Shi, X., ... ，Zheng, Z. & Wu, Z. (2025). Unveiling the hidden vitality of block-structured neighborhoods through a multimodal urban perception and ensemble learning framework. International Journal of Digital Earth, 18(1), 2545581."
   - "Ling, Z., Zheng, X., Chen, Y., Qian, Q.*, Zheng, Z., Meng, X., ... & Shi, X. (2024). The Nonlinear Relationship and Synergistic Effects between Built Environment and Urban Vitality at the Neighborhood Scale: A Case Study of Guangzhou’s Central Urban Area. Remote Sensing, 16(15), 2826."
