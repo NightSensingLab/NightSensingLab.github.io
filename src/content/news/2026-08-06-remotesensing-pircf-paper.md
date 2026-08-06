@@ -16,7 +16,7 @@ pictures: [
 
 2026 年 8 月 6 日，团队论文 **“Assessing Individual-Building Vertical Light Exposure in Urban Environments with a Residual Cascade Framework”** 在国际期刊 **Remote Sensing** 正式发表。
 
-论文由史湘华、凌振翔、郑子豪、陈应标、钱庆兰、吴志峰、王晋年和高峰共同完成，郑子豪为通讯作者。研究面向高密度城市中建筑立面夜间光暴露难以大范围精细评估的问题，提出了物理信息残差级联框架（Physics-Informed Residual Cascade Framework，PIRCF）。
+论文由史湘华、凌振翔、郑子豪、陈颖彪、千庆兰、吴志峰、王晋年和高枫共同完成，郑子豪为通讯作者。研究面向高密度城市中建筑立面夜间光暴露难以大范围精细评估的问题，提出了物理信息残差级联框架（Physics-Informed Residual Cascade Framework，PIRCF）。
 
 ## 研究背景
 
