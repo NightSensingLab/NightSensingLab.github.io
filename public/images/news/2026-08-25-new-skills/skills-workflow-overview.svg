@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 680" role="img" aria-labelledby="title desc">
+  <title id="title">两个 skill 串联研究数据与成果表达</title>
+  <desc id="desc">从研究问题、影像选择、日期协调镶嵌到可编辑 PPTX 重建的五步工作流。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="680" fill="#f7f8fa"/>
+  <rect x="44" y="34" width="1312" height="612" rx="22" fill="#ffffff" stroke="#d8dee7" stroke-width="2"/>
+  <text x="78" y="90" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="28" font-weight="700" fill="#172033">From pixels to presentation</text>
+  <text x="78" y="122" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" fill="#64748b">NightSensingLab · New skill release · 2026.08</text>
+  <rect x="1115" y="68" width="198" height="40" rx="20" fill="#eef2f6"/>
+  <text x="1214" y="94" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#334155">RESEARCH WORKFLOW</text>
+
+  <line x1="282" y1="350" x2="316" y2="350" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="552" y1="350" x2="586" y2="350" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="822" y1="350" x2="856" y2="350" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="1092" y1="350" x2="1126" y2="350" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g transform="translate(72 176)">
+    <rect width="210" height="350" rx="16" fill="#eef5ff" stroke="#a6c7f5" stroke-width="2"/>
+    <circle cx="34" cy="38" r="18" fill="#2f6fed"/>
+    <text x="34" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#fff">01</text>
+    <text x="24" y="96" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#1e3a6f">研究问题</text>
+    <text x="24" y="130" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#34527f">ROI / 数据集</text>
+    <text x="24" y="157" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#34527f">时间范围 / 质量约束</text>
+    <line x1="24" y1="188" x2="186" y2="188" stroke="#c3d8f4"/>
+    <text x="24" y="222" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#1e3a6f">INPUT</text>
+    <text x="24" y="252" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" fill="#34527f">研究区与研究目标</text>
+    <text x="24" y="282" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" fill="#34527f">可解释的筛选条件</text>
+  </g>
+
+  <g transform="translate(342 176)">
+    <rect width="210" height="350" rx="16" fill="#edf9f3" stroke="#9ed8bb" stroke-width="2"/>
+    <circle cx="34" cy="38" r="18" fill="#1c9b67"/>
+    <text x="34" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#fff">02</text>
+    <text x="24" y="96" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#165b42">Tile / Scene</text>
+    <text x="24" y="126" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#165b42">选择</text>
+    <text x="24" y="170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#27684f">最少几何覆盖</text>
+    <text x="24" y="197" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#27684f">局部云量与覆盖率</text>
+    <rect x="24" y="239" width="162" height="42" rx="8" fill="#d6f1e2"/>
+    <text x="105" y="265" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#165b42">GEE Tile Temporal Mosaic</text>
+  </g>
+
+  <g transform="translate(612 176)">
+    <rect width="210" height="350" rx="16" fill="#edf9f3" stroke="#9ed8bb" stroke-width="2"/>
+    <circle cx="34" cy="38" r="18" fill="#1c9b67"/>
+    <text x="34" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#fff">03</text>
+    <text x="24" y="96" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#165b42">日期协调</text>
+    <text x="24" y="126" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#165b42">镶嵌</text>
+    <text x="24" y="170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#27684f">日期差 / 硬约束</text>
+    <text x="24" y="197" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#27684f">重叠处理与 fallback</text>
+    <rect x="24" y="239" width="162" height="42" rx="8" fill="#d6f1e2"/>
+    <text x="105" y="265" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#165b42">traceable mosaic</text>
+  </g>
+
+  <g transform="translate(882 176)">
+    <rect width="210" height="350" rx="16" fill="#fff6e9" stroke="#f0c681" stroke-width="2"/>
+    <circle cx="34" cy="38" r="18" fill="#d9822b"/>
+    <text x="34" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#fff">04</text>
+    <text x="24" y="96" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#7a4516">分层 PPTX</text>
+    <text x="24" y="126" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#7a4516">重建</text>
+    <text x="24" y="170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#8a5a28">文字可编辑</text>
+    <text x="24" y="197" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#8a5a28">复杂视觉保真</text>
+    <rect x="24" y="239" width="162" height="42" rx="8" fill="#ffebc9"/>
+    <text x="105" y="257" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="10.5" font-weight="600" fill="#7a4516">PPT Screenshot to Editable</text>
+    <text x="105" y="273" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="10.5" font-weight="600" fill="#7a4516">PPTX</text>
+  </g>
+
+  <g transform="translate(1152 176)">
+    <rect width="176" height="350" rx="16" fill="#fff0f0" stroke="#e5a7a7" stroke-width="2"/>
+    <circle cx="34" cy="38" r="18" fill="#c44949"/>
+    <text x="34" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#fff">05</text>
+    <text x="24" y="96" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#7d2626">可复用</text>
+    <text x="24" y="126" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="22" font-weight="700" fill="#7d2626">成果</text>
+    <text x="24" y="170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#914343">选景报告</text>
+    <text x="24" y="197" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#914343">可编辑演示稿</text>
+    <text x="24" y="245" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#7d2626">REUSE / SHARE</text>
+  </g>
+
+  <text x="78" y="597" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif" font-size="15" fill="#64748b">两个 skill 覆盖研究数据生产与科研成果表达的相邻环节，保留输入、选择和验证过程。</text>
+</svg>
