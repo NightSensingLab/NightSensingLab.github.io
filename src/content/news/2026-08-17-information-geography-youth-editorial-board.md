@@ -43,3 +43,4 @@ pictures: [
 - [Information Geography - ScienceDirect 期刊主页](https://www.sciencedirect.com/journal/information-geography)
 - [ISSN 3050-5208 官方记录](https://portal.issn.org/resource/ISSN-L/3050-5208)
 - [期刊投稿系统](https://www.editorialmanager.com/infgeo/default2.aspx)
+- [课题组在 Information Geography 发表的论文：A dual-perspective evaluation framework for urban light exposure](/publications/2025-lingzx-ig)
