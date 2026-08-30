@@ -4,7 +4,7 @@
 
 **Goal:** 新增一篇开放基金成果新闻和一个完整的论文成果详情，并提供可检查的本地预览。
 
-**Architecture:** 两个 Markdown 条目共享同一组论文原图，复用现有内容集合、列表和详情模板。此任务只更新相互关联的编辑内容，不改应用代码，不发布到远端。
+**Architecture:** 两个 Markdown 条目共享同一组论文原图，复用现有内容集合、列表和详情模板。此任务只更新相互关联的编辑内容，不改应用代码；按用户后续要求提交并推送到 GitHub 主分支。
 
 **Tech Stack:** Astro 4、Markdown/YAML frontmatter、Poppler PDF 文本及原图提取。
 
@@ -30,7 +30,7 @@
 - [x] 运行 `npm run build`，退出码 0，生成 `/news/2026-08-30-sustainability-fisheries-open-fund/` 和 `/publications/2026-chenl-sustainability/`。
 - [x] 检查生成 HTML 的站内链接、图片路径、基金编号和作者数；所有目标文件存在。
 - [x] 启动本地预览，检查新闻、论文详情及列表；三张原图能加载，标题与正文可读。
-- [x] 运行 `git diff --check` 和 `git status --short`，不混入已有生成文件改动；交付本地预览链接，不提交或推送。
+- [x] 运行 `git diff --check` 和 `git status --short`，不混入已有生成文件改动；提交并推送到 `origin/main`，保留既有生成文件改动不动。
 
 ## 验证记录
 
@@ -39,4 +39,5 @@
 - 浏览器验证两个详情页图片加载、首屏排版、新闻到论文的跳转；新论文按日期排列在列表首位，标题搜索只显示该论文，Cite 弹窗正确展示完整引用。
 - 修正中文括号与加粗结束标记相邻造成的 Markdown 解析问题，最终 HTML 不含未渲染的双星号。
 - 独立只读审查无 Critical、Important 或 Minor 问题，确认三张图片与正式版 PDF 内嵌 JPEG 逐字节相同。
-- 本地服务：`http://127.0.0.1:4321/`；所有内容保持未提交状态。
+- 本地服务：`http://127.0.0.1:4321/`。
+- 2026-08-31：提交 `cf45d06` 已推送到 `origin/main`；`.astro` 与 `.cursor/debug.log` 的既有工作区改动未纳入提交。
