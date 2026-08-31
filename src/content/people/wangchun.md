@@ -8,6 +8,8 @@ education:
   - "硕士（在读），广州大学地理学与遥感学院，地图学与地理信息系统"
   - "学士，江苏师范大学，遥感技术与应用"
 researchInterests: ["灯光捕捞", "多模态数据", "环境监测"]
+publications:
+  - "Chen, L., Wang, C., Liu, G., Ling, Z., Cao, Z., Zhang, Q., Wu, Z., Yang, Z., & Zheng, Z. (2026). Uneven fisheries observability across the western Pacific: Implications of nighttime light–AIS integration for sustainable fisheries monitoring. Sustainability, 18(17), 8881."
 displayOrder: 2
 links:
   orcid: "0000-0000-0000-0003"

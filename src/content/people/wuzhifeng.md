@@ -17,6 +17,7 @@ email: "zfwu@gzhu.edu.cn"
 office: "广州市大学城外环西路230号广州大学地理科学与遥感学院"
 phone: "020-39366889"
 publications:
+  - "Chen, L., Wang, C., Liu, G., Ling, Z., Cao, Z., Zhang, Q., Wu, Z., Yang, Z., & Zheng, Z. (2026). Uneven fisheries observability across the western Pacific: Implications of nighttime light–AIS integration for sustainable fisheries monitoring. Sustainability, 18(17), 8881."
   - "Shi, X., Ling, Z., Zheng, Z.*, Chen, Y., Qian, Q., Wu, Z., Wang, J., & Gao, F. (2026). Assessing individual-building vertical light exposure in urban environments with a residual cascade framework. Remote Sensing, 18(15), 2621."
   - "吴志峰*, 曹峥, 郑子豪, 张棋斐, 黄晓峻, 刘广源, ... & 李加悦. (2025). 中国城市遥感研究综述. 遥感学报, 29(6)."
   - "谭秀娟, 吴志峰, & 郑子豪. (2025). 中国主要光学天文台址观测环境质量综合评估. 地理与地理信息科学, 41(2)."
