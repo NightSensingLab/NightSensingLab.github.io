@@ -1,9 +1,9 @@
 ---
 name: "凌振翔"
-role: "Master"
-affiliation: "广州大学地理科学与遥感学院"
+role: "Alumni"
+affiliation: "华南理工大学"
 avatar: "/images/lingzhenxiang.png"
-bio: "凌同学专注于机器学习在城市建成环境、城市活力等方面的预测与评估工作，在机器学习和深度学习方面有丰富经验。"
+bio: "凌振翔已毕业于广州大学地理科学与遥感学院，现为华南理工大学博士研究生，继续从事机器学习、城市建成环境与城市活力等方向的研究。"
 researchInterests: ["人工智能", "城市活力", "深度学习", "数据挖掘"]
 publications:
   - "Shi, X., Ling, Z., Zheng, Z.*, Chen, Y., Qian, Q., Wu, Z., Wang, J., & Gao, F. (2026). Assessing individual-building vertical light exposure in urban environments with a residual cascade framework. Remote Sensing, 18(15), 2621."
