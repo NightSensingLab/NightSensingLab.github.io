@@ -1,6 +1,6 @@
 ---
 name: "凌振翔"
-role: "Alumni"
+role: "Graduate"
 affiliation: "华南理工大学"
 avatar: "/images/lingzhenxiang.png"
 bio: "凌振翔已毕业于广州大学地理科学与遥感学院，现为华南理工大学博士研究生，继续从事机器学习、城市建成环境与城市活力等方向的研究。"
