@@ -13,6 +13,7 @@ education:
 email: "zhengzihao@gzhu.edu.cn"
 office: "理学实验楼703室"
 publications:
+  - "Yang, Z., Alexander, M., Zhang, N., Zheng, Z., D’Alpaos, A., Marani, M., Murray, B., & Silvestri, S. (2026). Satellite-Based Assessment Reveals Patterns of Coastal Marsh Carbon Sequestration Along the U.S. East and Gulf Coasts. Earth's Future, 14(11), e2026EF008763."
   - "Gong, Y., Zheng, Q., Biljecki, F., Qiu, W., Fan, Z., Zheng, Z., Yan, L., Pun, C. S. J., & He, S. Y. (2027). Substantial disagreement between satellite- and ground-level nighttime light patterns revealed by SDGSAT-1 and street view imagery. Remote Sensing of Environment, 348, 115724."
   - "Chen, L., Wang, C., Liu, G., Ling, Z., Cao, Z., Zhang, Q., Wu, Z., Yang, Z., & Zheng, Z. (2026). Uneven fisheries observability across the western Pacific: Implications of nighttime light–AIS integration for sustainable fisheries monitoring. Sustainability, 18(17), 8881."
   - "Shi, X., Ling, Z., Zheng, Z.*, Chen, Y., Qian, Q., Wu, Z., Wang, J., & Gao, F. (2026). Assessing individual-building vertical light exposure in urban environments with a residual cascade framework. Remote Sensing, 18(15), 2621."
