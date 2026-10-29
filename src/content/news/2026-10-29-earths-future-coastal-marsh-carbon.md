@@ -11,6 +11,8 @@ pictures: [
 
 2026年10月28日，团队[郑子豪老师](/people/zhengzihao/)作为合作者参与的论文“Satellite-Based Assessment Reveals Patterns of Coastal Marsh Carbon Sequestration Along the U.S. East and Gulf Coasts”在国际期刊 *Earth's Future* 在线发表。论文第一作者及通讯作者为杨智成，郑子豪老师为第四作者。
 
+杨智成博士主要从事滨海湿地生态与遥感研究，关注潮汐沼泽植被及其对环境变化的响应。他获洪堡博士后研究奖学金，现于德国奥尔登堡大学生物与环境科学研究所开展研究。[了解杨智成博士](https://www.humboldt-foundation.de/en/connect/explore-the-humboldt-network/singleview/1247678/dr-zhicheng-yang)
+
 滨海沼泽通过植被生长和土壤碳埋藏参与全球碳循环，但现有评估多依赖局地观测，对不同沼泽类型的区域差异关注不足。研究以美国东海岸和墨西哥湾沿岸潮汐沼泽为对象，结合2019—2024年 Sentinel-2影像、实地生物量观测、沼泽类型分布和已有生态参数，构建了区域尺度的植被碳储量与碳埋藏估算方法。
 
 ![美国东海岸与墨西哥湾沿岸的滨海沼泽类型分布](/images/news/2026-10-29-earths-future-coastal-marsh-carbon/fig02-marsh-types.png)
